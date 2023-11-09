@@ -3,7 +3,7 @@ import Verification from "../../../entities/Verification";
 import { RequestEmailVerificationResponse } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
 import privateResolver from "../../../utils/privateResolver";
-import { sendVerificationEmail } from "../../../utils/sendEmail";
+// import { sendVerificationEmail } from "../../../utils/sendEmail";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -18,11 +18,12 @@ const resolvers: Resolvers = {
             if (oldVerification) {
               oldVerification.remove();
             }
-            const newVerification = await Verification.create({
-              payload: user.email,
-              target: 'EMAIL'
-            }).save();
-            await sendVerificationEmail(user.fullName, newVerification.key);
+            console.log("new verify")
+            // const newVerification = await Verification.create({
+            //   payload: user.email,
+            //   target: 'EMAIL'
+            // }).save();
+            // await sendVerificationEmail(user.fullName, newVerification.key);
             return {
               ok: true,
               error: null
