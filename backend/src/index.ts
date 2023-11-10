@@ -20,6 +20,7 @@ const appOptions : Options = {
     path: SUBSCRIPTION_ENDPOINT,
     onConnect: async connectionParams => {
       const token = connectionParams["X-JWT"];
+      console.log("token: ", token)
       if (token) {
         const user = await decodeJWT(token);
         if (user) {
@@ -37,6 +38,7 @@ const handleAppStart = () => console.log(`Listening on port ${PORT}`);
 
 createConnection(connectionOptions)
 .then(() => {
+  console.log("connect database")
   app.start(appOptions, handleAppStart);
 })
 .catch(error => console.error(error));
