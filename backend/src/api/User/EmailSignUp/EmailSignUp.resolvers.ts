@@ -3,7 +3,7 @@ import Verification from '../../../entities/Verification';
 import { EmailSignUpMutationArgs, EmailSignUpResponse } from '../../../types/graph';
 import { Resolvers } from "../../../types/resolvers";
 import createJWT from '../../../utils/createJWT';
-import { sendVerificationEmail } from '../../../utils/sendEmail';
+// import { sendVerificationEmail } from '../../../utils/sendEmail';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -28,14 +28,15 @@ const resolvers: Resolvers = {
           if (phoneVerification) {
             const newUser = await User.create({ ...args }).save();
             if (newUser.email) {
-              const emailVerification = await Verification.create({
-                payload: newUser.email,
-                target: 'EMAIL'
-              }).save();
-              await sendVerificationEmail(
-                newUser.fullName,
-                emailVerification.key
-              );
+              console.log("email verify")
+              // const emailVerification = await Verification.create({
+              //   payload: newUser.email,
+              //   target: 'EMAIL'
+              // }).save();
+              // await sendVerificationEmail(
+              //   newUser.fullName,
+              //   emailVerification.key
+              // );
             }
             const token = createJWT(newUser.id);
             return {
