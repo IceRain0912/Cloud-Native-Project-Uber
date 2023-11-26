@@ -4,20 +4,20 @@ import { Button } from '@ant-design/react-native';
 
 const styles = StyleSheet.create({
     button: {
-      backgroundColor: '#2E4374',
+      backgroundColor: '#F1F1F1',
       padding: 10,
       borderRadius: 5,
       maxWidth: '100%',
     },
     buttonText: {
-      color: '#ffff',
+      color: '#4B4B4B',
       fontWeight: 'bold',
       fontSize: 16,
       textAlign: "center"
     },
 })
 
-const PrimaryButton = ({label, onPress}) => {
+const SecondaryButton = ({label, onPress}) => {
 
   return (
     <Button style={styles.button} onPress={onPress}>
@@ -26,5 +26,5 @@ const PrimaryButton = ({label, onPress}) => {
   );
 };
   
-  export default PrimaryButton;
+export default SecondaryButton;
   

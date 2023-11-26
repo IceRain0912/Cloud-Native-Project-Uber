@@ -1,19 +1,34 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useState, Fragment } from "react";
-import { Button } from '@ant-design/react-native';
+import React, { useState, Fragment, TouchableOpacity } from "react";
+// import { Button } from '@ant-design/react-native';
+import { Button } from "react-native";
 import SearchableDropDown from "../components/SearchableDropDown";
 import Chip from "../components/Chip";
 import PrimaryButton from "../components/PrimaryButton";
+import {TimePicker} from 'react-native-simple-time-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 16,
+        backgroundColor: "#ffff"
+    },
     title: {
         color: "#4B4B4B",
         fontFamily: "Lato, sans-serif",
         fontSize: 18,
         fontWeight: "700",
-        padding:16
+        padding: 8,
+        marginBottom: 16
     },
-
+    text: {
+        color: "#4B4B4B",
+        fontFamily: "Lato, sans-serif",
+        fontSize: 16,
+        fontWeight: "500",
+        lineHeight: 18,
+        padding: 8
+    },
     chip: {
         display: "flex",
         paddingVertical: 16,
@@ -40,7 +55,7 @@ const styles = StyleSheet.create({
         marginBottom: 24
     },
     inputGroup: {
-        marginBottom: 24
+        marginBottom: 16
     },
     button: {
         display: "flex",
@@ -74,8 +89,37 @@ const Main = ({ navigation }) => {
         setChecked(!checked);
     };
 
+    const [hours, setHours] = React.useState(0);
+    const [minutes, setMinutes] = React.useState(0);
+    const handleChange = (values) => {
+        const { hours, minutes } = values;
+        setHours(hours);
+        setMinutes(minutes);
+    };
+    const handleReset = () => {
+        setHours(0);
+        setMinutes(0);
+    };
+
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [selectedTime, setSelectedTime] = useState(new Date());
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        hideDatePicker();
+    };
+
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.title}>I'm Uber</Text> 
             <View style={{display: "flex"}}>
                 <View style={styles.chipGroup}>
@@ -96,11 +140,17 @@ const Main = ({ navigation }) => {
                 >
                 Save route
                 </Checkbox> */}
-                <Button style={styles.button} onPress={startMatching}>
-                    <Text style={styles.chipText}>
-                        Start matching
-                    </Text>
-                </Button>
+                <Text style={styles.text}>Depart</Text> 
+                <TimePicker value={{ hours, minutes }} onChange={handleChange} />
+                {/* <Button title="Show Date Picker" onPress={showDatePicker} />
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="time"
+                    date={selectedTime}
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                /> */}
+                <PrimaryButton label={"Start matching"} onPress={startMatching}/>
             </View>
         </View>
     );

@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Button } from '@ant-design/react-native';
-import SendRidingRequest from './SendRidingRequest';
+import SendRidingRequest from '../components/SendRidingRequest';
+import Popup from '../components/Popup';
+import Card from '../components/Card';
+import PrimaryButton from '../components/PrimaryButton';
 
 const styles = StyleSheet.create({
     card: {
+        backgroundColor: '#ffff',
         borderRadius: 20,
         padding: 24,
         marginBottom: 32,
@@ -66,13 +70,28 @@ const styles = StyleSheet.create({
     },
 });
 
-const DriversCard = ({ driver }) => {
+const DriversCard = ({ driver,  navigation }) => {
     
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [requestModalVisible, setRequestModalVisible] = useState(false);
+    const [paymentModalVisible, setPaymentModalVisible] = useState(false);
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+    const toggleRequestModal = () => {
+        setRequestModalVisible(!requestModalVisible);
     };
+
+    const continueToPayment = () => {
+        setRequestModalVisible(!requestModalVisible);
+        setPaymentModalVisible(!paymentModalVisible);
+    };
+
+    const confirmRide = () => {
+        navigation.navigate('ConfirmRide');
+    };
+
+    const togglePaymentModal = () => {
+        setPaymentModalVisible(!paymentModalVisible);
+    };
+
 
     return (
         <View style={styles.card}>
@@ -91,15 +110,33 @@ const DriversCard = ({ driver }) => {
                         <Text style={styles.cardSmallTextLight}>{`${driver.seatsLeft} seats left`}</Text>
                     </View>
                 </View>
-                <View>
+                <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
                     <View style={{display:"flex", gap:4}}>
                         <Text style={styles.cardText}>{driver.name}</Text>
                         <Text style={styles.cardSmallTextLight}>{`${driver.star} ★ (${driver.rating} ratings)`}</Text>
                     </View>
-                    <Button onPress={toggleModal}>Select</Button>
+                    <PrimaryButton label={"Select"} onPress={toggleRequestModal}/>
                 </View>
             </View>
-            <SendRidingRequest isVisible={isModalVisible} closeModal={toggleModal} />
+            {/* <SendRidingRequest isVisible={isModalVisible} closeModal={toggleModal} /> */}
+            <Popup 
+                title = {"Send Riding Request"}
+                text = {"Would you like to send riding request to Alex?"}
+                primaryButtonText = {"Confirm"}
+                sencondaryButtonText = {"Cancel"}
+                isVisible = {requestModalVisible}
+                primaryAction={continueToPayment}
+                closeModal={toggleRequestModal}
+            />
+            <Popup 
+                title = {"Congratulations"}
+                text = {"Alex has accepted your request!"}
+                primaryButtonText = {"Continue to payment (60s)"}
+                sencondaryButtonText = {"Cancel"}
+                isVisible = {paymentModalVisible}
+                primaryAction={confirmRide}
+                closeModal={togglePaymentModal}
+            />
         </View>
     );
 };

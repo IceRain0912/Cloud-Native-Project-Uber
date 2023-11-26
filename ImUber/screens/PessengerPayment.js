@@ -21,14 +21,21 @@ const styles = StyleSheet.create({
     }
 })
 
-const Chip = ({text}) => {
+const PessengerPayment = ({text}) => {
 
-  return (
-    <Button style={styles.chip} onPress={() => Toast.info('This is a toast tips')}>
-        <Text style={styles.chipText}>{text}</Text>
-    </Button>
-  );
+    const [paymentModalVisible, setPaymentModalVisible] = useState(false);
+    return (
+    <Popup 
+        title = {"Congratulations"}
+        text = {"Alex has accepted your request!"}
+        primaryButtonText = {"Continue to payment (60s)"}
+        sencondaryButtonText = {"Cancel"}
+        isVisible = {paymentModalVisible}
+        primaryAction={confirmRide}
+        closeModal={togglePaymentModal}
+    />
+    );
 };
   
-  export default Chip;
+  export default PessengerPayment;
   
