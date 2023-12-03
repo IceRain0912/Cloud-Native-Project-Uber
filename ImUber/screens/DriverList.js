@@ -2,17 +2,18 @@ import { View, FlatList, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import DriversCard from "./DriversCard";
 import NavBar from "../components/NavBar";
+import styles from "../components/styles";
 import { PickerView } from '@ant-design/react-native'
 
-const styles = StyleSheet.create({
-    title: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 18,
-        fontWeight: "700",
-        padding:16
-    }
-})
+// const styles = StyleSheet.create({
+//     title: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 18,
+//         fontWeight: "700",
+//         padding:16
+//     }
+// })
 
 const DriverList = ({ navigation }) => {
 

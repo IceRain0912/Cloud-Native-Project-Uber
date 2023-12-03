@@ -3,35 +3,36 @@ import React, { useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import UnderlineButton from "../components/UnderlineButton";
 import StarRating from 'react-native-star-rating-widget';
+import styles from "../components/styles";
 
 
-const styles = StyleSheet.create({
-    container: {
-        padding: 16,
-        backgroundColor: "#ffff",
-        alignItems: "center",
-        gap: 32
-    },
-    title: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 18,
-        fontWeight: "700",
-    },
-    text: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 16,
-        fontWeight: "500",
-        lineHeight: 18,
-        textAlign: "center"
-    },
-    input: {
-        marginBottom: 16,
-        borderWidth: 1,
-        Width: '100%'
-    }
-})
+// const styles = StyleSheet.create({
+//     container: {
+//         padding: 16,
+//         backgroundColor: "#ffff",
+//         alignItems: "center",
+//         gap: 32
+//     },
+//     title: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 18,
+//         fontWeight: "700",
+//     },
+//     text: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 16,
+//         fontWeight: "500",
+//         lineHeight: 18,
+//         textAlign: "center"
+//     },
+//     input: {
+//         marginBottom: 16,
+//         borderWidth: 1,
+//         Width: '100%'
+//     }
+// })
 
   
 const Rating = ({ navigation }) => {

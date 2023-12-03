@@ -2,32 +2,33 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import UnderlineButton from "../components/UnderlineButton";
+import styles from "../components/styles";
 
-const styles = StyleSheet.create({
-    container: {
-        padding: 16,
-        backgroundColor: "#ffff"
-    },
-    title: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 18,
-        fontWeight: "700",
-        marginBottom: 16
-    },
-    text: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 16,
-        fontWeight: "500",
-        lineHeight: 18,
-        padding: 8
-    },
-    input: {
-        marginBottom: 16,
-        borderWidth: 1,
-    }
-})
+// const styles = StyleSheet.create({
+//     container: {
+//         padding: 16,
+//         backgroundColor: "#ffff"
+//     },
+//     title: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 18,
+//         fontWeight: "700",
+//         marginBottom: 16
+//     },
+//     text: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 16,
+//         fontWeight: "500",
+//         lineHeight: 18,
+//         padding: 8
+//     },
+//     input: {
+//         marginBottom: 16,
+//         borderWidth: 1,
+//     }
+// })
 
   
 const Login = ({ navigation }) => {
@@ -45,7 +46,7 @@ const Login = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Login</Text> 
+            {/* <Text style={styles.title}>Login</Text>  */}
             <View style={{display: "flex"}}>
                 <View style={styles.inputGroup}>
                     <TextInput

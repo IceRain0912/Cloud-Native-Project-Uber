@@ -3,15 +3,15 @@ import React, { useState} from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import SecondaryButton from "../components/SecondaryButton";
 import Popup from '../components/Popup';
+import styles from "../components/styles";
 
 
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 16,
-        backgroundColor: "#ffff"
-    },
-})
+// const styles = StyleSheet.create({
+//     container: {
+//         padding: 16,
+//         backgroundColor: "#ffff"
+//     },
+// })
 
   
 const PessengerTrackRide = ({ navigation }) => {

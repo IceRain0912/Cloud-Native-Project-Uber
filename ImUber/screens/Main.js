@@ -7,74 +7,31 @@ import Chip from "../components/Chip";
 import PrimaryButton from "../components/PrimaryButton";
 import {TimePicker} from 'react-native-simple-time-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import styles from "../components/styles";
 
-const styles = StyleSheet.create({
-    container: {
-        padding: 16,
-        backgroundColor: "#ffff"
-    },
-    title: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 18,
-        fontWeight: "700",
-        padding: 8,
-        marginBottom: 16
-    },
-    text: {
-        color: "#4B4B4B",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 16,
-        fontWeight: "500",
-        lineHeight: 18,
-        padding: 8
-    },
-    chip: {
-        display: "flex",
-        paddingVertical: 16,
-        paddingHorizontal: 8,
-        alignItems: "flex-start",
-        gap: 10,
-        borderRadius: 20,
-        backgroundColor: "#2E4374",
-        width: 113,
-        height: 54
-    },
-    chipText: {
-        color: "#FFFF",
-        fontFamily: "Lato, sans-serif",
-        fontSize: 16,
-        fontWeight: "500",
-        lineHeight: 18,
-    },
-    chipGroup: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        gap: 16,
-        marginBottom: 24
-    },
-    inputGroup: {
-        marginBottom: 16
-    },
-    button: {
-        display: "flex",
-        paddingVertical: 16,
-        paddingHorizontal: 12,
-        justifyContent: "center",
-        alignItems: "flex-start",
-        borderRadius: 5,
-        backgroundColor: "#2E4374",
-        height: 54
-    },
-    checkBox: {
-        borderRadius: 20,
-        borderColor: "#4B4B4B",
-        width: 16,
-        height: 16,
-        marginBottom: 24
-    }
-})
+// const styles = StyleSheet.create({
+//     container: {
+//         padding: 16,
+//         backgroundColor: "#ffff"
+//     },
+//     title: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 18,
+//         fontWeight: "700",
+//         padding: 8,
+//         marginBottom: 16
+//     },
+//     text: {
+//         color: "#4B4B4B",
+//         fontFamily: "Lato, sans-serif",
+//         fontSize: 16,
+//         fontWeight: "500",
+//         lineHeight: 18,
+//         padding: 8
+//     },
+    
+// })
 
   
 const Main = ({ navigation }) => {
@@ -127,8 +84,8 @@ const Main = ({ navigation }) => {
                     <Chip text={"Offer a ride"}/>
                 </View>
                 <View style={styles.inputGroup}>
-                    <SearchableDropDown placeholder={"Select your pickup point"}/>
-                    <SearchableDropDown placeholder={"Select your destination"}/>
+                    <SearchableDropDown style={styles.input} placeholder={"Select your pickup point"}/>
+                    <SearchableDropDown style={styles.input} placeholder={"Select your destination"}/>
                 </View>
                 {/* <Button style={styles.chip} onPress={() => Toast.info('This is a toast tips')}>
                     <Text style={styles.chipText}>Choose saved route</Text>
