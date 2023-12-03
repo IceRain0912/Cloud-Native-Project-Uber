@@ -15,7 +15,7 @@ import User from './User';
 
 @Entity()
 class Ride extends BaseEntity {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryGeneratedColumn() ID: number;
 
   @Column({
     type: "text",
@@ -24,43 +24,22 @@ class Ride extends BaseEntity {
   })
   status: rideStatus;
 
-  @Column({ type: "text" })
-  pickUpAddress: string;
+  @Column({ type: "int" })
+  TransactionID: number;
 
-  @Column({ type: "double precision", default: 0 })
-  pickUpLat: number;
+  @Column({ type: "int", nullable: true })
+  DriverID: number;
 
-  @Column({ type: "double precision", default: 0 })
-  pickUpLng: number;
+  @Column({ type: "int", default: 0 })
+  MaximumCapacity: number;
 
-  @Column({ type: "text" })
-  dropOffAddress: string;
-
-  @Column({ type: "double precision", default: 0 })
-  dropOffLat: number;
-
-  @Column({ type: "double precision", default: 0 })
-  dropOffLng: number;
-
-  @Column({ type: "double precision", default: 0 })
-  price: number;
-
-  @Column({ type: "text" })
-  distance: string;
-
-  @Column({ type: "text" })
-  duration: string;
-
-  @Column({ nullable: true })
-  passengerId: number;
+  @Column({ type: "int" })
+  RouteID: number;
 
   @ManyToOne(type => User, user => user.ridesAsPassenger)
   passenger: User;
 
-  @Column({ nullable: true })
-  driverId: number;
-
-  @ManyToOne(type => User, user => user.ridesAsDriver, { nullable: true })
+  @ManyToOne(type => User, user => user.Rides, { nullable: true })
   driver: User;
 
   @OneToOne(type => Chat, chat => chat.ride)
