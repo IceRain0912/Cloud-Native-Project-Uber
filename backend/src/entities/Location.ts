@@ -26,7 +26,10 @@ import {
     @OneToMany(type => Route, Route => Route.Starting)
     LocationAsStarting: Route;
 
-    @ManyToMany(type => Route, Route => Route.Distination)
+    @ManyToMany(type => Route, Route => Route.MiddlePoints)
+    LocationAsMidpoints: Route[];
+
+    @OneToMany(type => Route, Route => Route.Distination)
     LocationAsDistination: Route;
   
     @CreateDateColumn() createdAt: string;

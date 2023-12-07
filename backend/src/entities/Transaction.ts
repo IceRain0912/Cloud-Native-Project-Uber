@@ -3,13 +3,13 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    OneToOne,
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
   import User from './User';
   import Ride from "./Ride";
+  import Car from "./Car";
   
   @Entity()
   class Trasaction extends BaseEntity {
@@ -39,11 +39,14 @@ import {
     @Column({ type: "text" })
     RequestTime: string;
   
-    @OneToOne(type => User, User => User.Transaction)
+    @ManyToOne(type => User, User => User.Transactions)
     Passenger: User;
 
     @ManyToOne(type => Ride, Ride => Ride.Transactions)
     Ride: Ride;
+
+    @ManyToOne(type => Car, Car => Car.Transactions)
+    Car: Car;
   
     @CreateDateColumn() createdAt: string;
   

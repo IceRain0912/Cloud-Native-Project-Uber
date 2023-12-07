@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-// import { IsEmail } from 'class-validator';
 import {
   BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn
 } from 'typeorm';
@@ -42,7 +41,6 @@ class User extends BaseEntity {
   CarID: number;
 
   @Column({ type: "text", nullable: true })
-  // @IsEmail()
   EmailAddress: string | null;
 
   @Column({ type: "text", nullable: true })
@@ -51,11 +49,11 @@ class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   CreditCardNumber: string;
 
-  @OneToMany(type => Ride, ride => ride.driver)
-  Rides: Ride[];
+  @OneToMany(type => Ride, ride => ride.Driver)
+  RidesAsDriver: Ride[];
 
   @OneToMany(type => Transaction, Transaction => Transaction.Passenger)
-  Transaction: Transaction[];
+  Transactions: Transaction[];
 
   @OneToOne(type => Car, Car => Car.Owner)
   Car: Car;

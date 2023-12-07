@@ -3,12 +3,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    OneToOne,
+    ManyToMany,
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
-  import User from './User';
   import Location from "./Location";
   
   @Entity()
@@ -26,12 +25,12 @@ import {
 
     @Column({ type: "int" })
     DestinationID: number;
-  
-    @OneToOne(type => User, User => User.Transaction)
-    Passenger: User;
 
     @ManyToOne(type => Location, Location=> Location.LocationAsStarting)
     Starting: Location;
+
+    @ManyToMany(type => Location, Location=> Location.LocationAsMidpoints)
+    MiddlePoints: Location;
 
     @ManyToOne(type => Location, Location=> Location.LocationAsDistination)
     Distination: Location;

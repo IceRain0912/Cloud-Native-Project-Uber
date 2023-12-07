@@ -4,6 +4,7 @@ import {
     CreateDateColumn,
     Entity,
     OneToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
@@ -27,6 +28,9 @@ import {
   
     @OneToOne(type => User, user => user.Car)
     Owner: User;
+
+    @OneToMany(type => Car, Car => Car.Transactions)
+    Transactions: Car;
   
     @CreateDateColumn() createdAt: string;
   

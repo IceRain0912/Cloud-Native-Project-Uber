@@ -5,12 +5,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
 import { rideStatus } from '../types/types';
-import Chat from './Chat';
+import Transaction from "./Transaction";
 import User from './User';
 
 @Entity()
@@ -36,18 +36,12 @@ class Ride extends BaseEntity {
   @Column({ type: "int" })
   RouteID: number;
 
-  @ManyToOne(type => User, user => user.ridesAsPassenger)
-  passenger: User;
+  @ManyToOne(type => User, user => user.RidesAsDriver, { nullable: true })
+  Driver: User;
 
-  @ManyToOne(type => User, user => user.Rides, { nullable: true })
-  driver: User;
-
-  @OneToOne(type => Chat, chat => chat.ride)
+  @OneToMany(type => Transaction, transaction => transaction.Ride)
   @JoinColumn()
-  chat: Chat;
-
-  @Column({ nullable: true })
-  chatId: number;
+  Transactions: Transaction[]
 
   @CreateDateColumn() createdAt: string;
 
