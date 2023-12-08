@@ -6,9 +6,6 @@ import Popup from '../components/Popup';
 import styles from '../components/styles';
 
 import Map from '../components/Map';
-import {Provider} from 'react-redux';
-import {store} from '../app/store';
-import tailwind from 'tailwind-react-native-classnames';
 
 // const styles = StyleSheet.create({
 //     container: {
