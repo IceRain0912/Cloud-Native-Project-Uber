@@ -7,12 +7,10 @@ const styles = StyleSheet.create({
         display: "flex",
         paddingVertical: 16,
         paddingHorizontal: 8,
-        alignItems: "flex-start",
-        gap: 10,
-        borderRadius: 20,
+        alignItems: "center",
+        borderRadius: 30,
         backgroundColor: "#2E4374",
-        width: 113,
-        height: 54
+        height: "fit-content"
     },
     chipText: {
         color: "#FFFF",

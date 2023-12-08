@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button } from '@ant-design/react-native';
-import SendRidingRequest from './SendRidingRequest';
+import PrimaryButton from './PrimaryButton';
 
 const styles = StyleSheet.create({
     card: {
@@ -66,13 +65,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const DriversCard = ({ driver }) => {
-    
-    const [isModalVisible, setModalVisible] = useState(false);
-
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
+const Card = ({ driver }) => {
 
     return (
         <View style={styles.card}>
@@ -96,12 +89,11 @@ const DriversCard = ({ driver }) => {
                         <Text style={styles.cardText}>{driver.name}</Text>
                         <Text style={styles.cardSmallTextLight}>{`${driver.star} ★ (${driver.rating} ratings)`}</Text>
                     </View>
-                    <Button onPress={toggleModal}>Select</Button>
+                    <PrimaryButton onPress={toggleModal}>Select</PrimaryButton>
                 </View>
             </View>
-            <SendRidingRequest isVisible={isModalVisible} closeModal={toggleModal} />
         </View>
     );
 };
 
-export default DriversCard;
+export default Card;
