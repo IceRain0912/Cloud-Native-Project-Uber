@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import tailwind from 'tailwind-react-native-classnames';
 
 export const GOOGLE_MAPS_API_KEY = '';
 
@@ -68,7 +67,7 @@ const Map = ({origin, destination}) => {
             longitude: destination.location.lng,
           }}
           title="Destination"
-          identifier="Destination"
+          identifier="destination"
         />
       </MapView>
     </>
