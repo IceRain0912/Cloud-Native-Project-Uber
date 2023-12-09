@@ -7,13 +7,6 @@ import styles from '../components/styles';
 
 import Map from '../components/Map';
 
-// const styles = StyleSheet.create({
-//     container: {
-//         padding: 16,
-//         backgroundColor: "#ffff"
-//     },
-// })
-
 const PessengerTrackRide = ({navigation}) => {
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(true);
   const [isArrivalModalVisible, setIsArrivalModalVisible] = useState(false);
@@ -26,20 +19,20 @@ const PessengerTrackRide = ({navigation}) => {
   };
   const report = () => {};
 
-  const yourOriginObject = {
+  const origin = {
     location: {
-      lat: 25.017,
-      lng: 121.5397,
+      lat: 24.859825448128372,
+      lng: 121.0082502216944,
     },
-    description: 'Your origin description', // You can include other properties as needed
+    description: 'Origin',
   };
 
-  const yourDestinationObject = {
+  const destination = {
     location: {
-      latitude: 25.032435,
-      longitude: 121.534905,
+      lat: 24.808427767227446,
+      lng: 121.04020156967613,
     },
-    description: 'Your origin description', // You can include other properties as needed
+    description: 'Destination',
   };
 
   return (
@@ -66,7 +59,7 @@ const PessengerTrackRide = ({navigation}) => {
         />
       </View>
       <View style={{flex: 1}}>
-        <Map origin={yourOriginObject} destination={yourDestinationObject} />
+        <Map origin={origin} destination={destination} />
       </View>
     </>
   );

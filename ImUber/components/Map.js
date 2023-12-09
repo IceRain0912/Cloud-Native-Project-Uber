@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-
-export const GOOGLE_MAPS_API_KEY = '';
+import {GOOGLE_MAPS_API_KEY} from '@env';
 
 const Map = ({origin, destination}) => {
   const mapRef = useRef(null);
@@ -23,7 +22,7 @@ const Map = ({origin, destination}) => {
       const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&key=${GOOGLE_MAPS_API_KEY}`;
       const response = await fetch(url);
       const data = await response.json();
-      setTravelTimeInfo(data.rows[0].elements[0]);
+      // setTravelTimeInfo(data.rows[0].elements[0]);
     };
 
     getTravelTime();
@@ -40,7 +39,7 @@ const Map = ({origin, destination}) => {
           longitudeDelta: 0.005,
         }}
         mapType="mutedStandard"
-        style={tailwind`flex-1`}>
+        style={{flex: 1}}>
         {origin && destination && (
           <MapViewDirections
             origin={origin.description}
@@ -59,6 +58,7 @@ const Map = ({origin, destination}) => {
           }}
           title="Origin"
           identifier="origin"
+          pinColor="green"
         />
 
         <Marker
@@ -68,6 +68,7 @@ const Map = ({origin, destination}) => {
           }}
           title="Destination"
           identifier="destination"
+          pinColor="red"
         />
       </MapView>
     </>
