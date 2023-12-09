@@ -64,7 +64,6 @@ const Map = ({origin, destination}) => {
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&key=${GOOGLE_MAPS_API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     setTravelTimeInfoOD(data.rows[0].elements[0]);
   };
 
@@ -75,6 +74,7 @@ const Map = ({origin, destination}) => {
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${currentLocation.latitude},${currentLocation.longitude}&destinations=${origin.location.lat},${origin.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
+
     setTravelTimeInfoCO(data.rows[0].elements[0]);
   };
 
@@ -188,40 +188,44 @@ const Map = ({origin, destination}) => {
       )}
 
       {/* Marker for displaying travel time information */}
-      {travelTimeInfoOD && (
-        <Marker
-          coordinate={{
-            latitude: (origin.location.lat + destination.location.lat) / 2,
-            longitude: (origin.location.lng + destination.location.lng) / 2,
-          }}>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>
-              Distance: {travelTimeInfoOD.distance.text}
-            </Text>
-            <Text style={styles.infoText}>
-              Duration: {travelTimeInfoOD.duration.text}
-            </Text>
-          </View>
-        </Marker>
-      )}
+      {travelTimeInfoOD &&
+        travelTimeInfoOD.distance &&
+        travelTimeInfoOD.duration && (
+          <Marker
+            coordinate={{
+              latitude: (origin.location.lat + destination.location.lat) / 2,
+              longitude: (origin.location.lng + destination.location.lng) / 2,
+            }}>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoText}>
+                Distance: {travelTimeInfoOD.distance.text}
+              </Text>
+              <Text style={styles.infoText}>
+                Duration: {travelTimeInfoOD.duration.text}
+              </Text>
+            </View>
+          </Marker>
+        )}
 
       {/* Marker for displaying travel time information between current location and origin */}
-      {travelTimeInfoCO && (
-        <Marker
-          coordinate={{
-            latitude: (currentLocation.latitude + origin.location.lat) / 2,
-            longitude: (currentLocation.longitude + origin.location.lng) / 2,
-          }}>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>
-              Distance: {travelTimeInfoCO.distance.text}
-            </Text>
-            <Text style={styles.infoText}>
-              Duration: {travelTimeInfoCO.duration.text}
-            </Text>
-          </View>
-        </Marker>
-      )}
+      {travelTimeInfoCO &&
+        travelTimeInfoCO.distance &&
+        travelTimeInfoCO.duration && (
+          <Marker
+            coordinate={{
+              latitude: (currentLocation.latitude + origin.location.lat) / 2,
+              longitude: (currentLocation.longitude + origin.location.lng) / 2,
+            }}>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoText}>
+                Distance: {travelTimeInfoCO.distance.text}
+              </Text>
+              <Text style={styles.infoText}>
+                Duration: {travelTimeInfoCO.duration.text}
+              </Text>
+            </View>
+          </Marker>
+        )}
     </MapView>
   );
 };
