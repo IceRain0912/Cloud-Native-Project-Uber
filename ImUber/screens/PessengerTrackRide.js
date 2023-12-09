@@ -21,18 +21,18 @@ const PessengerTrackRide = ({navigation}) => {
 
   const origin = {
     location: {
-      lat: 24.859825448128372,
-      lng: 121.0082502216944,
+      lat: 24.776084278030936,
+      lng: 120.99029925332255,
     },
-    description: 'Origin',
+    description: 'TSMC Fab 3',
   };
 
   const destination = {
     location: {
-      lat: 24.808427767227446,
-      lng: 121.04020156967613,
+      lat: 24.801896341829554,
+      lng: 120.97165256967537,
     },
-    description: 'Destination',
+    description: 'Hsinchu Train Station',
   };
 
   return (

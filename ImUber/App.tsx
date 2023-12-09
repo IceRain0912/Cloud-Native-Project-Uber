@@ -33,11 +33,11 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
+        {/* <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="DriverList" component={DriverList} />
-        <Stack.Screen name="ConfirmRide" component={ConfirmRide} />
+        <Stack.Screen name="ConfirmRide" component={ConfirmRide} /> */}
         <Stack.Screen
           name="PessengerTrackRide"
           component={PessengerTrackRide}
