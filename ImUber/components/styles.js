@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         padding: 8
     },
     input: {
-        marginBottom: 16,
+        marginBottom: 12,
         borderWidth: 1,
     },
     chip: {
@@ -42,6 +42,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         lineHeight: 18,
+    },
+    chipUnSelected: {
+        display: "flex",
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        alignItems: "flex-start",
+        gap: 10,
+        borderRadius: 20,
+        width: 113,
+        height: 54,
+        backgroundColor: "#ffff",
+        borderWidth: 1,
+        borderColor: "#2E4374",
+        color: "#2E4374",
     },
     chipGroup: {
         display: "flex",
