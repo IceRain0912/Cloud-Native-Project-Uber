@@ -6,9 +6,9 @@ import createJWT from '../../../utils/createJWT';
 const resolvers: Resolvers = {
   Mutation: {
     EmailSignIn: async (_, args: EmailSignInMutationArgs): Promise<EmailSignInResponse> => {
-      const { email, password } = args;
+      const { PhoneNumber, Password } = args;
       try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ PhoneNumber });
         if (!user) {
           return {
             ok: false,
@@ -16,9 +16,9 @@ const resolvers: Resolvers = {
             token: null
           };
         }
-        const checkPassword = await user.comparePassword(password);
+        const checkPassword = await user.comparePassword(Password);
         if (checkPassword) {
-          const token = createJWT(user.id);
+          const token = createJWT(user.ID);
           return {
             ok: true,
             error: null,

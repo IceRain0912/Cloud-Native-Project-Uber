@@ -1,0 +1,11 @@
+type Location {
+  ID: Int!
+  Name: String!
+  Longtitude: Float!
+  Latitude: Float!
+  LocationAsStarting: Route
+  LocationAsMidpoints: [Route]
+  LocationAsDistination: Route
+  createdAt: String!
+  updatedAt: String
+}
