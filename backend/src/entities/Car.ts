@@ -21,7 +21,7 @@ import {
     Model: string;
 
     @Column({ type: "text" })
-    Num: string;
+    PlateNum: string;
 
     @Column({ type: "int" })
     Capacity: number;

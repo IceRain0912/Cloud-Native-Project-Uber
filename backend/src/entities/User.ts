@@ -19,29 +19,29 @@ class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   Password: string;
 
-  @Column({ type: "text" })
+  @Column({ type: "text", nullable: true })
   Sex: number;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   Age: number;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true  })
   DriverRating: number;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true  })
   PassengerRating: number;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true  })
   DriverPreferredRouteID: number;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   PassengerPreferredRouteID: number;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   CarID: number;
 
   @Column({ type: "text", nullable: true })
-  EmailAddress: string | null;
+  EmailAddress: string;
 
   @Column({ type: "text", nullable: true })
   PhoneNumber: string;

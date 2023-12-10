@@ -1,0 +1,9 @@
+type CreateRouteResponse {
+  ok: Boolean!
+  error: String
+  route: String
+}
+
+type Mutation {
+  CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!
+}

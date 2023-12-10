@@ -9,20 +9,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
-import { rideStatus } from '../types/types';
 import Transaction from "./Transaction";
 import User from './User';
 
 @Entity()
 class Ride extends BaseEntity {
   @PrimaryGeneratedColumn() ID: number;
-
-  @Column({
-    type: "text",
-    enum: ["ACCEPTED", "FINISHED", "CANCELED", "REQUESTING", "ONROUTE"],
-    default: "REQUESTING"
-  })
-  status: rideStatus;
 
   @Column({ type: "int" })
   TransactionID: number;
@@ -41,7 +33,7 @@ class Ride extends BaseEntity {
 
   @OneToMany(type => Transaction, transaction => transaction.Ride)
   @JoinColumn()
-  Transactions: Transaction[]
+  Transactions: Transaction[];
 
   @CreateDateColumn() createdAt: string;
 

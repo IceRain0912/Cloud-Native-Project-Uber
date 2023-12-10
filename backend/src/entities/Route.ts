@@ -30,7 +30,7 @@ import {
     Starting: Location;
 
     @ManyToMany(type => Location, Location=> Location.LocationAsMidpoints)
-    MiddlePoints: Location;
+    MiddlePoints: Location[];
 
     @ManyToOne(type => Location, Location=> Location.LocationAsDistination)
     Distination: Location;

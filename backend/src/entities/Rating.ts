@@ -10,13 +10,13 @@ import {
   import User from './User';
   
   @Entity()
-  class Trasaction extends BaseEntity {
+  class Rating extends BaseEntity {
     @PrimaryGeneratedColumn() ID: number;
 
-    @Column({ type: "int" })
+    @Column({ type: "int"  })
     RaterID: number;
 
-    @Column({ type: "int" })
+    @Column({ type: "int"  })
     RatedPersonID: number;
 
     @Column({ type: "text" })
@@ -36,4 +36,4 @@ import {
     @UpdateDateColumn() updatedAt: string;
   }
   
-  export default Trasaction;
+  export default Rating;

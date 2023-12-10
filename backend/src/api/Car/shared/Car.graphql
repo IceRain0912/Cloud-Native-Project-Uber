@@ -1,0 +1,11 @@
+type Car {
+  ID: Int!
+  Comp: String!
+  Model: String!
+  PlateNum: String!
+  Capacity: Int!
+  Owner: User!
+  Transactions: Transaction
+  createdAt: String!
+  updatedAt: String
+}

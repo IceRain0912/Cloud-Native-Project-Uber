@@ -1,0 +1,22 @@
+type Transaction {
+  ID: Int!
+  PassengerID: Int!
+  Payment: String!
+  RouteID: Int!
+  DepartureTime: String!
+  ArrivalTime: String!
+  CarID: Int!
+  Status: TransStatus!
+  RequestTime: String!
+  Passenger: User!
+  Ride: Ride!
+  Car: Car!
+  createdAt: String!
+  updatedAt: String
+}
+
+enum TransStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

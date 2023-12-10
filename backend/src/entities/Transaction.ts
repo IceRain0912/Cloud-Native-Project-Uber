@@ -7,6 +7,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
+  import { transStatus } from '../types/types';
   import User from './User';
   import Ride from "./Ride";
   import Car from "./Car";
@@ -33,8 +34,12 @@ import {
     @Column({ type: "int" })
     CarID: number;
 
-    @Column({ type: "int" })
-    Status: number;
+    @Column({
+      type: "text",
+      enum: ["ACCEPTED", "FINISHED", "CANCELED", "REQUESTING", "ONROUTE"],
+      default: "REQUESTING"
+    })
+    Status: transStatus;
 
     @Column({ type: "text" })
     RequestTime: string;
