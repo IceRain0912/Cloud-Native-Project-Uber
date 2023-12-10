@@ -7,13 +7,13 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
-  import { transStatus } from '../types/types';
+  import { TransStatus } from '../types/types';
   import User from './User';
   import Ride from "./Ride";
   import Car from "./Car";
   
   @Entity()
-  class Trasaction extends BaseEntity {
+  class Transaction extends BaseEntity {
     @PrimaryGeneratedColumn() ID: number;
 
     @Column({ type: "int" })
@@ -39,18 +39,18 @@ import {
       enum: ["ACCEPTED", "FINISHED", "CANCELED", "REQUESTING", "ONROUTE"],
       default: "REQUESTING"
     })
-    Status: transStatus;
+    Status: TransStatus;
 
     @Column({ type: "text" })
     RequestTime: string;
   
-    @ManyToOne(type => User, User => User.Transactions)
+    @ManyToOne(type => User, User => User.Transaction)
     Passenger: User;
 
-    @ManyToOne(type => Ride, Ride => Ride.Transactions)
+    @ManyToOne(type => Ride, Ride => Ride.Transaction)
     Ride: Ride;
 
-    @ManyToOne(type => Car, Car => Car.Transactions)
+    @ManyToOne(type => Car, Car => Car.Transaction)
     Car: Car;
   
     @CreateDateColumn() createdAt: string;
@@ -58,4 +58,4 @@ import {
     @UpdateDateColumn() updatedAt: string;
   }
   
-  export default Trasaction;
+  export default Transaction;

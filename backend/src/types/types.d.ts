@@ -1,1 +1,1 @@
-export type transStatus = 'ACCEPTED' | 'FINISHED' | 'CANCELED' | 'REQUESTING' | 'ONROUTE';
+export type TransStatus = 'ACCEPTED' | 'FINISHED' | 'CANCELED' | 'REQUESTING' | 'ONROUTE';

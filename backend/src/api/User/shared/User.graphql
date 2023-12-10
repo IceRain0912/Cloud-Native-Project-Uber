@@ -12,7 +12,7 @@ type User {
   EmailAddress: String
   PhoneNumber: String
   CreditCardNumber: String
-  RidesAsDriver: [Ride]
+  RidesAsDriver: [Ride]!
   Transactions: [Transaction]
   Car: [Car]!
   RatingAsRater: [Rating]

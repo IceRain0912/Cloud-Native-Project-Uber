@@ -1,0 +1,9 @@
+type GetCarResponse {
+  ok: Boolean!
+  error: String
+  car: Car
+}
+
+type Query {
+  GetCar: GetCarResponse!
+}

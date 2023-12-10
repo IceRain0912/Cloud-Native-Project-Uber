@@ -5,7 +5,7 @@ type Ride {
   MaximumCapacity: Int!
   RouteID: Int!
   Driver: User!
-  Transactions: [Transaction]
+  Transactions: [Transaction]!
   createdAt: String!
   updatedAt: String
 }

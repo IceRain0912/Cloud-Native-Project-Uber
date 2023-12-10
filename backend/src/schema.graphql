@@ -1,14 +1,49 @@
-type CreateCarResponse {
+type CreateBookResponse {
   ok: Boolean!
   error: String
-  car: String
+  book: Book
 }
 
 type Mutation {
+  CreateBook(Title: String!, Author: String!, PageCount: Int!): CreateBookResponse!
   CreateCar(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int]!, DestinationID: Int!): CreateCarResponse!
   CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!
   EmailSignIn(PhoneNumber: String!, Password: String!): EmailSignInResponse!
   EmailSignUp(Name: String!, Password: String!, Sex: Int!, PhoneNumber: String!): EmailSignUpResponse!
+}
+
+type GetBookResponse {
+  ok: Boolean!
+  error: String
+  book: Book
+}
+
+type Query {
+  GetBook: GetBookResponse!
+  GetCar: GetCarResponse!
+  GetRoute: GetRouteResponse!
+  GetUser: GetUserResponse!
+}
+
+type Book {
+  ID: Int!
+  Title: String!
+  Author: String!
+  PageCount: Int!
+  createdAt: String!
+  updatedAt: String
+}
+
+type CreateCarResponse {
+  ok: Boolean!
+  error: String
+  car: Car
+}
+
+type GetCarResponse {
+  ok: Boolean!
+  error: String
+  car: Car
 }
 
 type Car {
@@ -18,7 +53,7 @@ type Car {
   PlateNum: String!
   Capacity: Int!
   Owner: User!
-  Transactions: Transaction
+  Transaction: Transaction
   createdAt: String!
   updatedAt: String
 }
@@ -54,7 +89,7 @@ type Ride {
   MaximumCapacity: Int!
   RouteID: Int!
   Driver: User!
-  Transactions: [Transaction]
+  Transactions: [Transaction]!
   createdAt: String!
   updatedAt: String
 }
@@ -62,7 +97,13 @@ type Ride {
 type CreateRouteResponse {
   ok: Boolean!
   error: String
-  route: String
+  route: Route
+}
+
+type GetRouteResponse {
+  ok: Boolean!
+  error: String
+  route: Route
 }
 
 type Route {
@@ -113,14 +154,10 @@ type EmailSignUpResponse {
   token: String
 }
 
-type GetMyProfileResponse {
+type GetUserResponse {
   ok: Boolean!
   error: String
   user: User
-}
-
-type Query {
-  GetMyProfile: GetMyProfileResponse!
 }
 
 type User {
@@ -137,7 +174,7 @@ type User {
   EmailAddress: String
   PhoneNumber: String
   CreditCardNumber: String
-  RidesAsDriver: [Ride]
+  RidesAsDriver: [Ride]!
   Transactions: [Transaction]
   Car: [Car]!
   RatingAsRater: [Rating]

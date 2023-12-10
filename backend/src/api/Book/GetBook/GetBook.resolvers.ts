@@ -3,12 +3,12 @@ import privateResolver from '../../../utils/privateResolver';
 
 const resolvers: Resolvers = {
   Query: {
-    GetMyProfile: privateResolver(async (_, __, context) => {
-      const { req: { user } } = context;
+    GetBook: privateResolver(async (_, __, context) => {
+      const { req: { book } } = context;
       return {
         ok: true,
         error: null,
-        user
+        book
       };
     })
   }

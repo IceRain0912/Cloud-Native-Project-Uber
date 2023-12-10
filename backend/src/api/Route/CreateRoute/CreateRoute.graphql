@@ -1,7 +1,7 @@
 type CreateRouteResponse {
   ok: Boolean!
   error: String
-  route: String
+  route: Route
 }
 
 type Mutation {

@@ -5,7 +5,7 @@ type Car {
   PlateNum: String!
   Capacity: Int!
   Owner: User!
-  Transactions: Transaction
+  Transaction: Transaction
   createdAt: String!
   updatedAt: String
 }

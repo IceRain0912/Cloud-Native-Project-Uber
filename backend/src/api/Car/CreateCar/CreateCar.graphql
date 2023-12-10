@@ -1,7 +1,7 @@
 type CreateCarResponse {
   ok: Boolean!
   error: String
-  car: String
+  car: Car
 }
 
 type Mutation {
