@@ -1,0 +1,9 @@
+type CreateLocationResponse {
+  ok: Boolean!
+  error: String
+  location: Location
+}
+
+type Mutation {
+  CreateLocation(Name: String!,  Longtitude: Int!,  Latitude: Int!):CreateLocationResponse!
+}

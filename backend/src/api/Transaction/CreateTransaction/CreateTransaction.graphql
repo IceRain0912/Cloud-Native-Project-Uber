@@ -1,0 +1,9 @@
+type CreateTransactionResponse {
+  ok: Boolean!
+  error: String
+  transaction: Transaction;
+}
+
+type Mutation {
+    CreateTransaction(PassengerID: Int!,  RouteID: Int!,  Payment: String!,  DepartureTime: String!,  CarID: Int!,  RequestTime: String!):CreateTransactionResponse!
+}
