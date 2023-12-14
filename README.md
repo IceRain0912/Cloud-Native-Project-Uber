@@ -13,10 +13,11 @@
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/your-username/uber-frontend.git
-   cd uber-frontend
+   git clone https://github.com/.git
+   cd ImUber
 
 2. **Start the server
-```bash
-$ yarn # for installing dependencies
-$ npx expo start # to start the Frontend server
+
+   ```bash
+   yarn # for installing dependencies
+   npx expo start # to start the Frontend server
