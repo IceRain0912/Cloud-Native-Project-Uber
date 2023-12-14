@@ -1,0 +1,9 @@
+type CreatePositionResponse {
+  ok: Boolean!
+  error: String
+  position: Position
+}
+
+type Mutation {
+  CreatePosition(UserID: Int!,  Longtitude: Float!,  Latitude: Float!):CreatePositionResponse!
+}

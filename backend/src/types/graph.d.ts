@@ -9,6 +9,16 @@ export interface Query {
   GetRide: GetRideResponse;
   GetRoute: GetRouteResponse;
   GetTransaction: GetTransactionResponse;
+  GetRide: GetRideResponse;
+  GetRating: GetRatingResponse;
+  GetLocation: GetLocationResponse;
+  GetPosition: GetPositionResponse;
+}
+
+export interface GetBookResponse {
+  ok: boolean;
+  error: string | null;
+  book: Book | null;
   GetUser: GetUserResponse;
 }
 
@@ -75,6 +85,13 @@ export interface Car {
   Transaction: Array<Transaction> | null;
   createdAt: string;
   updatedAt: string | null;
+}
+
+export interface Position {
+  positionID: number;
+  UserID: number;
+  Longtitude: number;
+  Latitude: number;
 }
 
 export interface User {
@@ -204,6 +221,12 @@ export interface GetUserResponse {
   user: User | null;
 }
 
+export interface GetPositionResponse {
+  ok: boolean;
+  error: string | null;
+  position: Position | null;
+}
+
 export interface Mutation {
   CreateBook: CreateBookResponse;
   CreateCar: CreateCarResponse;
@@ -214,6 +237,20 @@ export interface Mutation {
   CreateTransaction: CreateTransactionResponse;
   EmailSignIn: EmailSignInResponse;
   EmailSignUp: EmailSignUpResponse;
+  CreatePosition: CreatePositionResponse;
+  UpdatePosition: UpdatePositionResponse;
+}
+
+export interface CreatePositionMutationArgs {
+  UserID: number;
+  Longtitude: number;
+  Latitude: number;
+}
+
+export interface UpdatePositionMutationArgs {
+  positionID: number;
+  Longtitude: number;
+  Latitude: number;
 }
 
 export interface CreateBookMutationArgs {
@@ -275,6 +312,17 @@ export interface EmailSignUpMutationArgs {
   PhoneNumber: string;
 }
 
+export interface CreatePositionResponse {
+  ok: boolean;
+  error: string | null;
+  position: Position | null;
+}
+
+export interface UpdatePositionResponse {
+  ok: boolean;
+  error: string | null;
+  position: Position | null;
+}
 export interface CreateBookResponse {
   ok: boolean;
   error: string | null;

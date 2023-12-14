@@ -24,7 +24,7 @@ const resolvers: Resolvers = {
         } else {
           return {
             ok: false,
-            error: 'Car not found',
+            error: 'Location not found',
             location: null
           };
         }
