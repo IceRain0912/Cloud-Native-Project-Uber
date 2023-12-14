@@ -5,5 +5,5 @@ type CreateLocationResponse {
 }
 
 type Mutation {
-  CreateLocation(Name: String!,  Longtitude: Int!,  Latitude: Int!):CreateLocationResponse!
+  CreateLocation(Name: String!,  Longtitude: Float!,  Latitude: Float!):CreateLocationResponse!
 }
