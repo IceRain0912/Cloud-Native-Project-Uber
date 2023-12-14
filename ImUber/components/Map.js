@@ -1,13 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
-import {GOOGLE_MAPS_API_KEY} from '@env';
-import * as Location from 'expo-location';
-import styles from '../components/styles';
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
+import { GOOGLE_MAPS_API_KEY } from "@env";
+import * as Location from "expo-location";
+import styles from "../components/styles";
 
-const EDGE_PADDING = {top: 50, right: 50, bottom: 50, left: 50};
-// const ANIMATION_DURATION = 500;
+const EDGE_PADDING = { top: 50, right: 50, bottom: 50, left: 50 };
 const INITIAL_REGION = {
   latitude: 25.017,
   longitude: 121.5397,
@@ -15,7 +14,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.005,
 };
 
-const Map = () => {
+const Map = ({ onMapValues }) => {
   //Route From api
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -28,7 +27,7 @@ const Map = () => {
         lat: 24.801850638002016,
         lng: 120.97158829773566,
       },
-      description: '新竹火車站',
+      description: "新竹火車站",
     });
 
     setDestination({
@@ -36,7 +35,7 @@ const Map = () => {
         lat: 24.7688348955981,
         lng: 121.01425942142271,
       },
-      description: '台灣積體電路製造十二廠P7',
+      description: "台灣積體電路製造十二廠P7",
     });
 
     setStops([
@@ -45,35 +44,35 @@ const Map = () => {
           lat: 24.808392574136747,
           lng: 121.04024422909944,
         },
-        description: '新竹高鐵站',
+        description: "新竹高鐵站",
       },
       {
         location: {
           lat: 24.797096328506978,
           lng: 120.99648863750419,
         },
-        description: '國立清華大學',
+        description: "國立清華大學",
       },
       {
         location: {
           lat: 24.784660852606194,
           lng: 120.99565928094843,
         },
-        description: '國立交通大學',
+        description: "國立交通大學",
       },
       {
         location: {
           lat: 24.808567893350247,
           lng: 120.96931322128688,
         },
-        description: '新竹市政府',
+        description: "新竹市政府",
       },
       {
         location: {
           lat: 24.810079020549633,
           lng: 120.97518554046995,
         },
-        description: '新竹巨城購物中心',
+        description: "新竹巨城購物中心",
       },
     ]);
 
@@ -82,7 +81,7 @@ const Map = () => {
         lat: 24.807918184276982,
         lng: 120.961006522564,
       },
-      description: 'Driver Location',
+      description: "Driver Location",
     });
   }, []);
 
@@ -90,16 +89,19 @@ const Map = () => {
   const mapRef = useRef(null);
   const currentLocationMarkerRef = useRef(null);
   const [travelTimeInfoOD, setTravelTimeInfoOD] = useState(null);
+  const [travelTimeInfoDO, setTravelTimeInfoDO] = useState(null);
   const [travelTimeInfoCO, setTravelTimeInfoCO] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentLocationDescription, setCurrentLocationDescription] =
     useState(null);
+  // Sort stops by distance from origin to destination
+  const [sortedStops, setSortedStops] = useState([]);
 
   // Fetch current location and description using Expo Location API
   const getLocation = async () => {
     try {
-      const {status} = await Location.requestForegroundPermissionsAsync();
-      if (status === 'granted') {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === "granted") {
         const location = await Location.getCurrentPositionAsync({});
         setCurrentLocation(location.coords);
 
@@ -113,10 +115,10 @@ const Map = () => {
           setCurrentLocationDescription(reverseGeocode[0].name);
         }
       } else {
-        console.log('Location permission not granted');
+        console.log("Location permission not granted");
       }
     } catch (error) {
-      console.error('Error getting location:', error);
+      console.error("Error getting location:", error);
     }
   };
 
@@ -126,14 +128,16 @@ const Map = () => {
 
     const stopMarkers = stops.map((stop, index) => `stop-${index}`);
     const markers = [
-      'origin',
-      'destination',
-      'currentLocation',
-      'driverLocation',
+      "origin",
+      "destination",
+      "currentLocation",
+      "driverLocation",
       ...stopMarkers,
     ];
     // console.log(markers);
-    mapRef.current?.fitToSuppliedMarkers(markers, {edgePadding: EDGE_PADDING});
+    mapRef.current?.fitToSuppliedMarkers(markers, {
+      edgePadding: EDGE_PADDING,
+    });
   };
 
   // Fetch travel time information using Google Distance Matrix API
@@ -145,14 +149,27 @@ const Map = () => {
     },${origin.location.lng}&destinations=${destination.location.lat},${
       destination.location.lng
     }&waypoints=optimize:true|${sortedStops
-      .map(stop => `${stop.location.lat},${stop.location.lng}`)
-      .join('|')}&key=${GOOGLE_MAPS_API_KEY}`;
+      .map((stop) => `${stop.location.lat},${stop.location.lng}`)
+      .join("|")}&key=${GOOGLE_MAPS_API_KEY}`;
     const response = await fetch(url);
     // console.log(response);
     const data = await response.json();
     // console.log(data.rows[0].elements);
 
     setTravelTimeInfoOD(data.rows[0].elements[0]);
+  };
+
+  // Fetch travel time information using Google Distance Matrix API
+  const getTravelTimeDO = async () => {
+    if (!origin || !driverLocation) return;
+
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${driverLocation.location.lat},${driverLocation.location.lng}&destinations=${origin.location.lat},${origin.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
+    const response = await fetch(url);
+    // console.log(response);
+    const data = await response.json();
+    // console.log(data.rows[0].elements);
+
+    setTravelTimeInfoDO(data.rows[0].elements[0]);
   };
 
   // Fetch travel time information for route from current location to origin
@@ -169,12 +186,62 @@ const Map = () => {
   };
 
   useEffect(() => {
+    if (origin && destination && stops.length > 0) {
+      const url = `https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=${
+        origin.description
+      }&destination=${destination.description}&waypoints=optimize:true|${stops
+        .map((stop) => `${stop.location.lat},${stop.location.lng}`)
+        .join("|")}&key=${GOOGLE_MAPS_API_KEY}`;
+
+      const getSortedStops = async () => {
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.routes && data.routes.length > 0) {
+            const sortedStops = data.routes[0].waypoint_order.map(
+              (index) => stops[index]
+            );
+            setSortedStops(sortedStops);
+          } else {
+            console.error(
+              "Invalid response from the Directions API:",
+              data.error_message
+            );
+          }
+        } catch (error) {
+          console.error("Error fetching sorted stops:", error);
+        }
+      };
+
+      getSortedStops();
+    }
+  }, [stops]);
+
+  useEffect(() => {
     getLocation();
+
+    // Set up an interval to call getLocation every, for example, 5000 milliseconds (5 seconds)
+    const locationInterval = setInterval(() => {
+      getLocation();
+    }, 5000);
+
+    // Clear the interval when the component is unmounted or no longer needed
+    return () => clearInterval(locationInterval);
   }, []);
 
   useEffect(() => {
-    fitToMarkers();
-  }, [origin, destination, currentLocation, driverLocation, stops]);
+    // Ensure that current location and sorted stops are fetched before calling fitToMarkers
+    if (
+      currentLocation &&
+      origin &&
+      destination &&
+      driverLocation &&
+      sortedStops.length > 0
+    ) {
+      fitToMarkers();
+    }
+  }, [origin, destination, currentLocation, driverLocation, sortedStops]);
 
   useEffect(() => {
     getTravelTimeOD();
@@ -184,41 +251,41 @@ const Map = () => {
     getTravelTimeCO();
   }, [origin, currentLocation, GOOGLE_MAPS_API_KEY]);
 
-  // Sort stops by distance from origin to destination
-  const [sortedStops, setSortedStops] = useState([]);
+  useEffect(() => {
+    getTravelTimeDO();
+  }, [origin, driverLocation, GOOGLE_MAPS_API_KEY]);
 
   useEffect(() => {
-    if (origin && destination && stops.length > 0) {
-      const url = `https://maps.googleapis.com/maps/api/directions/json?units=metric&origin=${
-        origin.description
-      }&destination=${destination.description}&waypoints=optimize:true|${stops
-        .map(stop => `${stop.location.lat},${stop.location.lng}`)
-        .join('|')}&key=${GOOGLE_MAPS_API_KEY}`;
+    // Check if all travel time information is available
+    if (travelTimeInfoCO && travelTimeInfoOD && travelTimeInfoDO) {
+      // Set up an interval for continuous updates
+      const intervalId = setInterval(() => {
+        // Update values dynamically
+        const mapValues = {
+          CusToOrg: {
+            distance: travelTimeInfoCO.distance.text,
+            duration: travelTimeInfoCO.duration.text,
+          },
+          OrgToDes: {
+            distance: travelTimeInfoOD.distance.text,
+            duration: travelTimeInfoOD.duration.text,
+          },
+          DriverToOrg: {
+            distance: travelTimeInfoDO.distance.text,
+            duration: travelTimeInfoDO.duration.text,
+          },
+        };
 
-      const getSortedStops = async () => {
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
+        // Call the callback function with the updated values
+        onMapValues(mapValues);
+      }, 1000); // Update every 1000 milliseconds
 
-          if (data.routes && data.routes.length > 0) {
-            const sortedStops = data.routes[0].waypoint_order.map(
-              index => stops[index],
-            );
-            setSortedStops(sortedStops);
-          } else {
-            console.error(
-              'Invalid response from the Directions API:',
-              data.error_message,
-            );
-          }
-        } catch (error) {
-          console.error('Error fetching sorted stops:', error);
-        }
-      };
-
-      getSortedStops();
+      // Clear the interval when the component is unmounted
+      return () => clearInterval(intervalId);
     }
-  }, [stops]);
+
+    // If any travel time information is not available, do nothing
+  }, [travelTimeInfoCO, travelTimeInfoOD, travelTimeInfoDO, onMapValues]);
 
   return (
     <>
@@ -226,13 +293,14 @@ const Map = () => {
         ref={mapRef}
         initialRegion={INITIAL_REGION}
         mapType="mutedStandard"
-        style={{flex: 4 / 5}}>
+        style={{ flex: 4 / 5 }}
+      >
         {/* MapViewDirections for route between origin and destination */}
         {origin && destination && (
           <MapViewDirections
             origin={origin.description}
             destination={destination.description}
-            waypoints={sortedStops.map(stop => ({
+            waypoints={sortedStops.map((stop) => ({
               latitude: stop.location.lat,
               longitude: stop.location.lng,
             }))}
@@ -334,15 +402,19 @@ const Map = () => {
       </MapView>
 
       {/* Travel time info */}
-      {travelTimeInfoCO && travelTimeInfoOD && (
-        <View style={{flex: 1 / 5}}>
+      {travelTimeInfoCO && travelTimeInfoOD && travelTimeInfoDO && (
+        <View style={{ flex: 1 / 5 }}>
           <Text style={styles.infoContainer}>
-            Current Location to Origin: {travelTimeInfoCO.distance.text},{' '}
+            Origin to Destination: {travelTimeInfoOD.distance.text},{" "}
+            {travelTimeInfoOD.duration.text}
+          </Text>
+          <Text style={styles.infoContainer}>
+            Current Location to Origin: {travelTimeInfoCO.distance.text},{" "}
             {travelTimeInfoCO.duration.text}
           </Text>
           <Text style={styles.infoContainer}>
-            Origin to Destination: {travelTimeInfoOD.distance.text},{' '}
-            {travelTimeInfoOD.duration.text}
+            Driver to Origin: {travelTimeInfoDO.distance.text},{" "}
+            {travelTimeInfoDO.duration.text}
           </Text>
         </View>
       )}
