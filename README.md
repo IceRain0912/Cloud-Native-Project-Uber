@@ -2,13 +2,13 @@
 
 ## Frontend (I'm Uber)
 
-## Prerequisites
+### Prerequisites
 
 - [Node.js](https://nodejs.org/) installed
 - [Yarn](https://yarnpkg.com/) installed
 - [Expo CLI](https://docs.expo.dev/workflow/expo-cli/) installed globally
 
-## Getting Started
+### Getting Started
 
 1. **Clone the Repository:**
 
