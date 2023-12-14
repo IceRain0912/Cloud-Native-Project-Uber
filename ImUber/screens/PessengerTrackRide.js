@@ -18,8 +18,8 @@ const PessengerTrackRide = ({ navigation }) => {
         values.DriverToOrg.distance.split(" ")[0] < 1.8 &&
         !isArrivalModalVisible
       ) {
-        console.log(values.CusToOrg.distance.split(" ")[0]);
-        console.log(values.DriverToOrg.distance.split(" ")[0]);
+        // console.log(values.CusToOrg.distance.split(" ")[0]);
+        // console.log(values.DriverToOrg.distance.split(" ")[0]);
         isConditionSatisfied.current = true; // Update ref to indicate the condition is satisfied
       }
     }
