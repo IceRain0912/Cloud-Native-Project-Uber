@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet } from "react-native";
 import { Button, Toast } from '@ant-design/react-native';
+// import styles from "./styles";
 
 const styles = StyleSheet.create({
     chip: {
@@ -18,14 +19,22 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "500",
         lineHeight: 18,
-    }
+    },
+    chipUnSelected: {
+      backgroundColor: "#ffff",
+      borderWidth: 2,
+      borderColor: "#2E4374",
+    },
+    chipUnSelectedText: {
+      color: "#2E4374",
+    },
 })
 
-const Chip = ({text}) => {
+const Chip = ({text, isSelected, onPress}) => {
 
   return (
-    <Button style={styles.chip} onPress={() => Toast.info('This is a toast tips')}>
-        <Text style={styles.chipText}>{text}</Text>
+    <Button style={[styles.chip, isSelected?null:styles.chipUnSelected]} onPress={onPress}>
+        <Text style={[styles.chipText, isSelected?null:styles.chipUnSelectedText]}>{text}</Text>
     </Button>
   );
 };

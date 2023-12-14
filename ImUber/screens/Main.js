@@ -1,49 +1,18 @@
-import { View, Text, StyleSheet } from "react-native";
-import React, { useState, Fragment, TouchableOpacity } from "react";
-// import { Button } from '@ant-design/react-native';
-import { Button } from "react-native";
+import { View, Text, TextInput } from "react-native";
+import React, { useState } from "react";
 import SearchableDropDown from "../components/SearchableDropDown";
 import Chip from "../components/Chip";
-import PrimaryButton from "../components/PrimaryButton";
-import {TimePicker} from 'react-native-simple-time-picker';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import PessengerMain from "../components/PessengerMain";
+import DriverMain from "../components/DriverMain";
 import styles from "../components/styles";
-
-// const styles = StyleSheet.create({
-//     container: {
-//         padding: 16,
-//         backgroundColor: "#ffff"
-//     },
-//     title: {
-//         color: "#4B4B4B",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 18,
-//         fontWeight: "700",
-//         padding: 8,
-//         marginBottom: 16
-//     },
-//     text: {
-//         color: "#4B4B4B",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 16,
-//         fontWeight: "500",
-//         lineHeight: 18,
-//         padding: 8
-//     },
-    
-// })
 
   
 const Main = ({ navigation }) => {
 
-    const startMatching = () => {
-        navigation.navigate('DriverList');
-    };
-
-    const [checked, setChecked] = useState(false);
-
-    const toggleCheckbox = () => {
-        setChecked(!checked);
+    const [selectedContent, setSelectedContent] = useState("Pessenger");
+    
+    const handleContentChange = (content) => {
+        setSelectedContent(content);
     };
 
     const [hours, setHours] = React.useState(0);
@@ -53,26 +22,29 @@ const Main = ({ navigation }) => {
         setHours(hours);
         setMinutes(minutes);
     };
-    const handleReset = () => {
-        setHours(0);
-        setMinutes(0);
+
+    const [number, setNumber] = useState(0);
+
+    const handleAdd = () => {
+        setNumber(number + 1);
     };
 
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [selectedTime, setSelectedTime] = useState(new Date());
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
+    const handleMinus = () => {
+        setNumber(number - 1);
     };
 
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
+    const addStop = () => {
+        setTextInput([...textInput,  <SearchableDropDown style={styles.input} placeholder={"Select midpoint"} key={textInput.length} />]);
     };
 
-    const handleConfirm = (date) => {
-        console.warn("A date has been picked: ", date);
-        hideDatePicker();
+    const [textInput, setTextInput] = useState([]);
+
+    const startMatching = () => {
+        navigation.navigate('DriverList');
+    };
+
+    const generateRoute = () => {
+        navigation.navigate('ConfirmRoute');
     };
 
     return (
@@ -80,34 +52,32 @@ const Main = ({ navigation }) => {
             <Text style={styles.title}>I'm Uber</Text> 
             <View style={{display: "flex"}}>
                 <View style={styles.chipGroup}>
-                    <Chip text={"Find a ride"}/>
-                    <Chip text={"Offer a ride"}/>
+                    {/* <Chip text={"Find a ride"} onPress={() => setSelectedContent('Pessenger')}/>
+                    <Chip text={"Offer a ride"} onPress={() => setSelectedContent('Driver')}/> */}
+                    <Chip text={"Find a ride"} isSelected={selectedContent == "Pessenger" ? true: false} onPress={() => handleContentChange('Pessenger')}/>
+                    <Chip text={"Offer a ride"} isSelected={selectedContent == "Driver" ? true: false} onPress={() => handleContentChange('Driver')}/>
                 </View>
-                <View style={styles.inputGroup}>
-                    <SearchableDropDown style={styles.input} placeholder={"Select your pickup point"}/>
-                    <SearchableDropDown style={styles.input} placeholder={"Select your destination"}/>
-                </View>
-                {/* <Button style={styles.chip} onPress={() => Toast.info('This is a toast tips')}>
-                    <Text style={styles.chipText}>Choose saved route</Text>
-                </Button> */}
-                {/* <Checkbox
-                    checked={checked}
-                    onChange={toggleCheckbox}
-                    style={styles.checkBox}
-                >
-                Save route
-                </Checkbox> */}
-                <Text style={styles.text}>Depart</Text> 
-                <TimePicker value={{ hours, minutes }} onChange={handleChange} />
-                {/* <Button title="Show Date Picker" onPress={showDatePicker} />
-                <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
-                    mode="time"
-                    date={selectedTime}
-                    onConfirm={handleConfirm}
-                    onCancel={hideDatePicker}
-                /> */}
-                <PrimaryButton label={"Start matching"} onPress={startMatching}/>
+
+                {selectedContent == 'Pessenger' ? (
+                    <PessengerMain
+                        hours={hours}
+                        minutes={minutes}
+                        handleChange={handleChange}
+                        startMatching={startMatching}
+                    />
+                ) : (
+                    <DriverMain
+                        number={number}
+                        handleAdd={handleAdd}
+                        handleMinus={handleMinus}
+                        hours={hours}
+                        minutes={minutes}
+                        handleChange={handleChange}
+                        addStop={addStop}
+                        textInput={textInput}
+                        generateRoute={generateRoute}
+                    />
+                )}
             </View>
         </View>
     );

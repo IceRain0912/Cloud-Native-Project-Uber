@@ -1,0 +1,25 @@
+import { Text, View, StyleSheet} from "react-native";
+import SearchableDropDown from "../components/SearchableDropDown";
+import React from "react";
+import PrimaryButton from "../components/PrimaryButton";
+import {TimePicker} from 'react-native-simple-time-picker';
+import styles from "./styles";
+
+
+
+const PessengerMain = ({hours, minutes, handleChange, startMatching}) => {
+
+    return (
+        <View>
+            <View style={styles.inputGroup}>
+                <SearchableDropDown style={styles.input} placeholder={"Select your pickup point"}/>
+                <SearchableDropDown style={styles.input} placeholder={"Select your destination"}/>
+            </View>
+            <Text style={styles.text}>Depart</Text> 
+            <TimePicker value={{ hours, minutes }} onChange={handleChange} />
+            <PrimaryButton label={"Start matching"} onPress={startMatching}/>
+        </View>
+    );
+};
+
+export default PessengerMain;
