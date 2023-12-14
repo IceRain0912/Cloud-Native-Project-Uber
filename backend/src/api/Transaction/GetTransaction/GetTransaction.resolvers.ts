@@ -5,17 +5,10 @@ import { GetTransactionQueryArgs, GetTransactionResponse } from '../../../types/
 
 const resolvers: Resolvers = {
   Query: {
-    GetTransaction: privateResolver(async (_, { PassengerID, RouteID, Payment, DepartureTime, CarID, RequestTime, Status, ArrivalTime}: GetTransactionQueryArgs, { req }): Promise<GetTransactionResponse> => {
+    GetTransaction: privateResolver(async (_, { TransactionID }: GetTransactionQueryArgs, { req }): Promise<GetTransactionResponse> => {
       try {
         const transaction = await Transaction.findOne({
-            PassengerID,
-            RouteID,
-            Payment,
-            DepartureTime,
-            CarID,
-            RequestTime,
-            Status,
-            ArrivalTime,
+          ID: TransactionID
         });
 
         if (transaction) {

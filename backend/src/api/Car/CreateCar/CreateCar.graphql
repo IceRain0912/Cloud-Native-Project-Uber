@@ -5,5 +5,5 @@ type CreateCarResponse {
 }
 
 type Mutation {
-  CreateCar(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int]!, DestinationID: Int!): CreateCarResponse!
+  CreateCar(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateCarResponse!
 }

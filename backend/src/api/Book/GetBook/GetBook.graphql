@@ -5,5 +5,5 @@ type GetBookResponse {
 }
 
 type Query {
-  GetBook: GetBookResponse!
+  GetBook(BookID: Int!): GetBookResponse!
 }

@@ -5,5 +5,5 @@ type GetRideResponse {
 }
 
 type Query {
-  GetRide(RideId: Int!): GetRideResponse!
+  GetRide(RideID: Int!): GetRideResponse!
 }

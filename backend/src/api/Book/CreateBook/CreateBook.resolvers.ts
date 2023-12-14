@@ -14,7 +14,9 @@ const resolvers: Resolvers = {
         { req, pubSub }
       ): Promise<CreateBookResponse> => {
         try {
+          console.log("before cfreate book")
           const book = await Book.create({ ...args }).save();
+          console.log(book)
           return {
             ok: true,
             error: null,

@@ -5,5 +5,5 @@ type GetRatingResponse {
 }
 
 type Query {
-  GetRating(RideID: Int!): GetRatingResponse!
+  GetRating(RateID: Int!): GetRatingResponse!
 }

@@ -36,8 +36,8 @@ import {
 
     @Column({
       type: "text",
-      enum: ["ACCEPTED", "FINISHED", "CANCELED", "REQUESTING", "ONROUTE"],
-      default: "REQUESTING"
+      enum: ["PENDING", "APPROVED", "REJECTED"],
+      default: "PENDING"
     })
     Status: TransStatus;
 

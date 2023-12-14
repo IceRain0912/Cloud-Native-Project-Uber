@@ -23,11 +23,11 @@ type GetBookResponse {
 }
 
 type Query {
-  GetBook: GetBookResponse!
+  GetBook(BookID: Int!): GetBookResponse!
   GetCar(CarID: Int!): GetCarResponse!
   GetLocation(LocationID: Int!): GetLocationResponse!
-  GetRating(RideID: Int!): GetRatingResponse!
-  GetRide(RideId: Int!): GetRideResponse!
+  GetRating(RateID: Int!): GetRatingResponse!
+  GetRide(RideID: Int!): GetRideResponse!
   GetRoute(RouteID: Int!): GetRouteResponse!
   GetTransaction(TransactionID: Int!): GetTransactionResponse!
   GetUser(UserID: Int!): GetUserResponse!
@@ -60,8 +60,8 @@ type Car {
   Model: String!
   PlateNum: String!
   Capacity: Int!
-  Owner: User!
-  Transaction: Transaction
+  Owner: User
+  Transaction: [Transaction]
   createdAt: String!
   updatedAt: String
 }
@@ -133,7 +133,7 @@ type Ride {
   MaximumCapacity: Int!
   RouteID: Int!
   Driver: User!
-  Transactions: [Transaction]!
+  Transaction: [Transaction]!
   createdAt: String!
   updatedAt: String
 }
@@ -230,9 +230,9 @@ type User {
   EmailAddress: String
   PhoneNumber: String
   CreditCardNumber: String
-  RidesAsDriver: [Ride]!
-  Transactions: [Transaction]
-  Car: [Car]!
+  RidesAsDriver: [Ride]
+  Transaction: [Transaction]
+  Car: Car!
   RatingAsRater: [Rating]
   RatingAsRated: [Rating]
   createdAt: String!
