@@ -14,6 +14,7 @@ import ConfirmRide from "./screens/ConfirmRide.js";
 import ConfirmRoute from "./screens/ConfirmRoute.js";
 import Rating from "./screens/Rating.js";
 import PessengerTrackRide from "./screens/PessengerTrackRide.js";
+import OnCar from "./screens/OnCar.js";
 import DriverTrackRide from "./screens/DriverTrackRide.js";
 
 const Stack = createStackNavigator();
@@ -37,6 +38,7 @@ const App = () => {
           name="PessengerTrackRide"
           component={PessengerTrackRide}
         />
+        <Stack.Screen name="OnCar" component={OnCar} />
         <Stack.Screen name="Rating" component={Rating} />
       </Stack.Navigator>
     </NavigationContainer>
