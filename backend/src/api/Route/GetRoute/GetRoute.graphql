@@ -5,5 +5,5 @@ type GetRouteResponse {
 }
 
 type Query {
-  GetRoute: GetRouteResponse!
+  GetRoute(RouteID: Int!): GetRouteResponse!
 }

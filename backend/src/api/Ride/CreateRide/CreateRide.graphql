@@ -1,7 +1,7 @@
 type CreateRideResponse {
   ok: Boolean!
   error: String
-  ride: Ride;
+  ride: Ride
 }
 
 type Mutation {

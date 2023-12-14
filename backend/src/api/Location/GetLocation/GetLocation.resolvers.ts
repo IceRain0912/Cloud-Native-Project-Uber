@@ -12,7 +12,7 @@ const resolvers: Resolvers = {
     ): Promise<GetLocationResponse> => {
       try {
         const location = await Location.findOne({
-          Name: args.Name, Longtitude: args.Longtitude, Latitude: args.Latitude
+          ID: args.LocationID
         });
 
         if (location) {

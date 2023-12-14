@@ -5,5 +5,5 @@ type GetLocationResponse {
 }
 
 type Query {
-  GetLocation: GetLocationResponse!
+  GetLocation(LocationID: Int!): GetLocationResponse!
 }

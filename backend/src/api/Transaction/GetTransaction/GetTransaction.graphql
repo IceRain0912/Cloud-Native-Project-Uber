@@ -5,5 +5,5 @@ type GetTransactionResponse {
 }
 
 type Query {
-  GetTransaction: GetTransactionResponse!
+  GetTransaction(TransactionID: Int!): GetTransactionResponse!
 }
