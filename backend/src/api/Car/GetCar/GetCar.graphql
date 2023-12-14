@@ -5,5 +5,5 @@ type GetCarResponse {
 }
 
 type Query {
-  GetCar: GetCarResponse!
+  GetCar(CarID: Int!): GetCarResponse!
 }

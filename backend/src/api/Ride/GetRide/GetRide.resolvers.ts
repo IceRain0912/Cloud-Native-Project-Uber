@@ -1,39 +1,43 @@
-import { Resolvers } from '../../../types/resolvers';
 import Ride from '../../../entities/Ride';
-import privateResolver from '../../../utils/privateResolver';
 import { GetRideQueryArgs, GetRideResponse } from '../../../types/graph';
+import { Resolvers } from '../../../types/resolvers';
+import privateResolver from '../../../utils/privateResolver';
 
 const resolvers: Resolvers = {
   Query: {
-    GetRide: privateResolver(async (_, { MaximumCapacity, DriverID}: GetRideQueryArgs, { req }): Promise<GetRideResponse> => {
+    GetRide: privateResolver(async (
+      _,
+      args: GetRideQueryArgs,
+      { req }
+    ): Promise<GetRideResponse> => {
       try {
         const ride = await Ride.findOne({
-            MaximumCapacity,
-            DriverID,
-        });
-
+          ID: args.RideID
+        },
+        { relations: ['passenger', 'driver'] }
+        );
         if (ride) {
           return {
             ok: true,
             error: null,
-            ride,
+            ride
           };
         } else {
           return {
             ok: false,
-            error: 'Ride not found', 
-            ride: null,
-          };
+            error: 'Ride not found',
+            ride: null
+          }
         }
       } catch (error) {
         return {
           ok: false,
           error: error.message,
-          ride: null,
-        };
+          ride: null
+        }
       }
-    }),
-  },
-};
+    })
+  }
+}
 
 export default resolvers;

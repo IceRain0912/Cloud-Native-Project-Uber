@@ -1,7 +1,7 @@
 type CreateTransactionResponse {
   ok: Boolean!
   error: String
-  transaction: Transaction;
+  transaction: Transaction
 }
 
 type Mutation {

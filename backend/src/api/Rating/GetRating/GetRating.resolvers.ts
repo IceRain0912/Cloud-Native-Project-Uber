@@ -5,13 +5,10 @@ import { GetRatingQueryArgs, GetRatingResponse } from '../../../types/graph';
 
 const resolvers: Resolvers = {
   Query: {
-    GetRating: privateResolver(async (_, { RaterID, RatedPersonID, RaterComments, RouteID }: GetRatingQueryArgs, { req }): Promise<GetRatingResponse> => {
+    GetRating: privateResolver(async (_, { RateID }: GetRatingQueryArgs, { req }): Promise<GetRatingResponse> => {
       try {
         const rating = await Rating.findOne({
-          RaterID,
-          RatedPersonID,
-          RaterComments,
-          RouteID,
+          ID: RateID,
         });
 
         if (rating) {

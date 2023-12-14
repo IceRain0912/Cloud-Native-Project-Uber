@@ -7,7 +7,11 @@ type CreateBookResponse {
 type Mutation {
   CreateBook(Title: String!, Author: String!, PageCount: Int!): CreateBookResponse!
   CreateCar(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int]!, DestinationID: Int!): CreateCarResponse!
+  CreateLocation(Name: String!, Longtitude: Int!, Latitude: Int!): CreateLocationResponse!
+  CreateRating(RaterID: Int!, RatedPersonID: Int!, RateStars: Int!, RouteID: Int!): CreateRatingResponse!
+  CreateRide(MaximumCapacity: Int!, DriverID: Int!): CreateRideResponse!
   CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!
+  CreateTransaction(PassengerID: Int!, RouteID: Int!, Payment: String!, DepartureTime: String!, CarID: Int!, RequestTime: String!): CreateTransactionResponse!
   EmailSignIn(PhoneNumber: String!, Password: String!): EmailSignInResponse!
   EmailSignUp(Name: String!, Password: String!, Sex: Int!, PhoneNumber: String!): EmailSignUpResponse!
 }
@@ -20,9 +24,13 @@ type GetBookResponse {
 
 type Query {
   GetBook: GetBookResponse!
-  GetCar: GetCarResponse!
-  GetRoute: GetRouteResponse!
-  GetUser: GetUserResponse!
+  GetCar(CarID: Int!): GetCarResponse!
+  GetLocation(LocationID: Int!): GetLocationResponse!
+  GetRating(RideID: Int!): GetRatingResponse!
+  GetRide(RideId: Int!): GetRideResponse!
+  GetRoute(RouteID: Int!): GetRouteResponse!
+  GetTransaction(TransactionID: Int!): GetTransactionResponse!
+  GetUser(UserID: Int!): GetUserResponse!
 }
 
 type Book {
@@ -58,6 +66,18 @@ type Car {
   updatedAt: String
 }
 
+type CreateLocationResponse {
+  ok: Boolean!
+  error: String
+  location: Location
+}
+
+type GetLocationResponse {
+  ok: Boolean!
+  error: String
+  location: Location
+}
+
 type Location {
   ID: Int!
   Name: String!
@@ -70,6 +90,18 @@ type Location {
   updatedAt: String
 }
 
+type CreateRatingResponse {
+  ok: Boolean!
+  error: String
+  rating: Rating
+}
+
+type GetRatingResponse {
+  ok: Boolean!
+  error: String
+  rating: Rating
+}
+
 type Rating {
   ID: Int!
   RaterID: Int!
@@ -80,6 +112,18 @@ type Rating {
   Rated: User!
   createdAt: String!
   updatedAt: String
+}
+
+type CreateRideResponse {
+  ok: Boolean!
+  error: String
+  ride: Ride
+}
+
+type GetRideResponse {
+  ok: Boolean!
+  error: String
+  ride: Ride
 }
 
 type Ride {
@@ -117,6 +161,18 @@ type Route {
   Distination: Location
   createdAt: String!
   updatedAt: String
+}
+
+type CreateTransactionResponse {
+  ok: Boolean!
+  error: String
+  transaction: Transaction
+}
+
+type GetTransactionResponse {
+  ok: Boolean!
+  error: String
+  transaction: Transaction
 }
 
 type Transaction {
