@@ -35,6 +35,44 @@ const PessengerTrackRide = ({navigation}) => {
     description: '台灣積體電路製造十二廠P7',
   };
 
+  const stops = [
+    {
+      location: {
+        lat: 24.808392574136747,
+        lng: 121.04024422909944,
+      },
+      description: '新竹高鐵站',
+    },
+    {
+      location: {
+        lat: 24.797096328506978,
+        lng: 120.99648863750419,
+      },
+      description: '國立清華大學',
+    },
+    {
+      location: {
+        lat: 24.784660852606194,
+        lng: 120.99565928094843,
+      },
+      description: '國立交通大學',
+    },
+    {
+      location: {
+        lat: 24.808567893350247,
+        lng: 120.96931322128688,
+      },
+      description: '新竹市政府',
+    },
+    {
+      location: {
+        lat: 24.810079020549633,
+        lng: 120.97518554046995,
+      },
+      description: '新竹巨城購物中心',
+    },
+  ];
+
   return (
     <>
       <View style={styles.container}>
@@ -59,7 +97,7 @@ const PessengerTrackRide = ({navigation}) => {
         />
       </View>
       <View style={{flex: 1}}>
-        <Map origin={origin} destination={destination} />
+        <Map origin={origin} destination={destination} stops={stops} />
       </View>
     </>
   );
