@@ -1,0 +1,9 @@
+type CreateCarResponse {
+  ok: Boolean!
+  error: String
+  car: String
+}
+
+type Mutation {
+  CreateCar(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int]!, DestinationID: Int!): CreateCarResponse!
+}

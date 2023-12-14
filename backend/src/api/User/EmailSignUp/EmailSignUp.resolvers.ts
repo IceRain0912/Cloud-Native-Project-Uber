@@ -1,9 +1,7 @@
 import User from '../../../entities/User';
-import Verification from '../../../entities/Verification';
 import { EmailSignUpMutationArgs, EmailSignUpResponse } from '../../../types/graph';
 import { Resolvers } from "../../../types/resolvers";
 import createJWT from '../../../utils/createJWT';
-// import { sendVerificationEmail } from '../../../utils/sendEmail';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -12,8 +10,8 @@ const resolvers: Resolvers = {
       args: EmailSignUpMutationArgs,
     ): Promise<EmailSignUpResponse> => {
       try {
-        const { email } = args;
-        const existingUser = await User.findOne({ email });
+        const { PhoneNumber } = args;
+        const existingUser = await User.findOne({ PhoneNumber });
         if (existingUser) {
           return {
             ok: false,
@@ -21,36 +19,16 @@ const resolvers: Resolvers = {
             token: null
           }
         } else {
-          const phoneVerification = await Verification.findOne({
-            payload: args.phoneNumber,
-            verified: true
-          });
-          if (phoneVerification) {
-            const newUser = await User.create({ ...args }).save();
-            if (newUser.email) {
-              console.log("email verify")
-              // const emailVerification = await Verification.create({
-              //   payload: newUser.email,
-              //   target: 'EMAIL'
-              // }).save();
-              // await sendVerificationEmail(
-              //   newUser.fullName,
-              //   emailVerification.key
-              // );
-            }
-            const token = createJWT(newUser.id);
-            return {
-              ok: true,
-              error: null,
-              token
-            };
-          } else {
-            return {
-              ok: false,
-              error: "You haven't verified your phone number",
-              token: null
-            };
+          const newUser = await User.create({ ...args }).save();
+          if (newUser.PhoneNumber) {
+            console.log("phone number verify")
           }
+          const token = createJWT(newUser.ID);
+          return {
+            ok: true,
+            error: null,
+            token
+          };
         }
       } catch (error) {
         return {

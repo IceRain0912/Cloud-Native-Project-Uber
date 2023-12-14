@@ -1,0 +1,11 @@
+type Rating {
+  ID: Int!
+  RaterID: Int!
+  RatedPersonID: Int!
+  RaterComments: String!
+  RouteID: Int!
+  Rater: User!
+  Rated: User!
+  createdAt: String!
+  updatedAt: String
+}

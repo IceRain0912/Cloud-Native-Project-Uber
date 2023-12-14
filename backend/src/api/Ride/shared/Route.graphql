@@ -1,0 +1,11 @@
+type Ride {
+  ID: Int!
+  TransactionID: Int!
+  DriverID: Int!
+  MaximumCapacity: Int!
+  RouteID: Int!
+  Driver: User!
+  Transactions: [Transaction]
+  createdAt: String!
+  updatedAt: String
+}

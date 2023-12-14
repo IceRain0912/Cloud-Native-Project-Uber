@@ -1,0 +1,12 @@
+type Route {
+  ID: Int!
+  DriverID: Int!
+  StartingPointID: Int!
+  MiddlePointsID: [Int]
+  DestinationID: Int!
+  Starting: Location
+  MiddlePoints: [Location]
+  Distination: Location
+  createdAt: String!
+  updatedAt: String
+}
