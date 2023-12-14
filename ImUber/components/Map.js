@@ -256,7 +256,6 @@ const Map = ({origin, destination, stops}) => {
             Origin to Destination: {travelTimeInfoOD.distance.text},{' '}
             {travelTimeInfoOD.duration.text}
           </Text>
-          {/* <Text>abc</Text> */}
         </View>
       )}
     </>
