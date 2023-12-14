@@ -15,7 +15,78 @@ const INITIAL_REGION = {
   longitudeDelta: 0.005,
 };
 
-const Map = ({origin, destination, stops}) => {
+const Map = () => {
+  //Route From api
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [stops, setStops] = useState(null);
+  const [driverLocation, setDriverLocation] = useState(null);
+
+  useEffect(() => {
+    setOrigin({
+      location: {
+        lat: 24.801850638002016,
+        lng: 120.97158829773566,
+      },
+      description: '新竹火車站',
+    });
+
+    setDestination({
+      location: {
+        lat: 24.7688348955981,
+        lng: 121.01425942142271,
+      },
+      description: '台灣積體電路製造十二廠P7',
+    });
+
+    setStops([
+      {
+        location: {
+          lat: 24.808392574136747,
+          lng: 121.04024422909944,
+        },
+        description: '新竹高鐵站',
+      },
+      {
+        location: {
+          lat: 24.797096328506978,
+          lng: 120.99648863750419,
+        },
+        description: '國立清華大學',
+      },
+      {
+        location: {
+          lat: 24.784660852606194,
+          lng: 120.99565928094843,
+        },
+        description: '國立交通大學',
+      },
+      {
+        location: {
+          lat: 24.808567893350247,
+          lng: 120.96931322128688,
+        },
+        description: '新竹市政府',
+      },
+      {
+        location: {
+          lat: 24.810079020549633,
+          lng: 120.97518554046995,
+        },
+        description: '新竹巨城購物中心',
+      },
+    ]);
+
+    setDriverLocation({
+      location: {
+        lat: 24.807918184276982,
+        lng: 120.961006522564,
+      },
+      description: 'Driver Location',
+    });
+  }, []);
+
+  // Inner values
   const mapRef = useRef(null);
   const currentLocationMarkerRef = useRef(null);
   const [travelTimeInfoOD, setTravelTimeInfoOD] = useState(null);
@@ -51,13 +122,14 @@ const Map = ({origin, destination, stops}) => {
 
   // Fit the map to markers and animate to the region containing all markers
   const fitToMarkers = () => {
-    if (!origin || !destination || !currentLocation) return;
+    if (!origin || !destination || !currentLocation || !driverLocation) return;
 
     const stopMarkers = stops.map((stop, index) => `stop-${index}`);
     const markers = [
       'origin',
       'destination',
       'currentLocation',
+      'driverLocation',
       ...stopMarkers,
     ];
     // console.log(markers);
@@ -78,7 +150,7 @@ const Map = ({origin, destination, stops}) => {
     const response = await fetch(url);
     // console.log(response);
     const data = await response.json();
-    console.log(data.rows[0].elements);
+    // console.log(data.rows[0].elements);
 
     setTravelTimeInfoOD(data.rows[0].elements[0]);
   };
@@ -91,7 +163,7 @@ const Map = ({origin, destination, stops}) => {
     const response = await fetch(url);
     // console.log(response);
     const data = await response.json();
-    console.log(data.rows[0].elements[0]);
+    // console.log(data.rows[0].elements[0]);
 
     setTravelTimeInfoCO(data.rows[0].elements[0]);
   };
@@ -102,7 +174,7 @@ const Map = ({origin, destination, stops}) => {
 
   useEffect(() => {
     fitToMarkers();
-  }, [origin, destination, currentLocation, stops]);
+  }, [origin, destination, currentLocation, driverLocation, stops]);
 
   useEffect(() => {
     getTravelTimeOD();
@@ -231,6 +303,20 @@ const Map = ({origin, destination, stops}) => {
           />
         )}
 
+        {/* Marker for driver location */}
+        {driverLocation && (
+          <Marker
+            coordinate={{
+              latitude: driverLocation.location.lat,
+              longitude: driverLocation.location.lng,
+            }}
+            title="Driver Location"
+            identifier="driverLocation"
+            description={driverLocation.description}
+            pinColor="blue"
+          />
+        )}
+
         {/* Markers for stops */}
         {sortedStops.map((stop, index) => (
           <Marker
@@ -246,6 +332,8 @@ const Map = ({origin, destination, stops}) => {
           />
         ))}
       </MapView>
+
+      {/* Travel time info */}
       {travelTimeInfoCO && travelTimeInfoOD && (
         <View style={{flex: 1 / 5}}>
           <Text style={styles.infoContainer}>
