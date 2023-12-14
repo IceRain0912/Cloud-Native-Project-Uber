@@ -34,7 +34,6 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator>
         {/* <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="DriverList" component={DriverList} />
         <Stack.Screen name="ConfirmRide" component={ConfirmRide} /> */}
