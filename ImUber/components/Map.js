@@ -15,7 +15,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.005,
 };
 
-const Map = ({origin, destination}) => {
+const Map = ({origin, destination, stops}) => {
   const mapRef = useRef(null);
   const currentLocationMarkerRef = useRef(null);
   const [travelTimeInfoOD, setTravelTimeInfoOD] = useState(null);
@@ -53,40 +53,57 @@ const Map = ({origin, destination}) => {
   const fitToMarkers = () => {
     if (!origin || !destination || !currentLocation) return;
 
-    const markers = ['origin', 'destination', 'currentLocation'];
+    const stopMarkers = stops.map((stop, index) => `stop-${index}`);
+    const markers = [
+      'origin',
+      'destination',
+      'currentLocation',
+      ...stopMarkers,
+    ];
+    // console.log(markers);
     mapRef.current?.fitToSuppliedMarkers(markers, {edgePadding: EDGE_PADDING});
   };
 
-  // Fetch travel time information using Google Distance Matrix API
-  const getTravelTimeOD = async () => {
-    if (!origin || !destination) return;
+  // // Fetch travel time information using Google Distance Matrix API
+  // const getTravelTimeOD = async () => {
+  //   if (!origin || !destination || sortedStops.length === 0) return;
 
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&key=${GOOGLE_MAPS_API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    setTravelTimeInfoOD(data.rows[0].elements[0]);
-  };
+  //   // Create an array of stop coordinates
+  //   const stopCoordinates = sortedStops
+  //     .map(stop => `${stop.location.lat},${stop.location.lng}`)
+  //     .join('|');
 
-  // Fetch travel time information for route from current location to origin
-  const getTravelTimeCO = async () => {
-    if (!origin || !currentLocation) return;
+  //   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&waypoints=${stopCoordinates}&key=${GOOGLE_MAPS_API_KEY}`;
 
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${currentLocation.latitude},${currentLocation.longitude}&destinations=${origin.location.lat},${origin.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
+  //   try {
+  //     const response = await fetch(url);
+  //     const data = await response.json();
 
-    setTravelTimeInfoCO(data.rows[0].elements[0]);
-  };
-
-  // Animate to the current location with a marker animation
-  // const animateToCurrentLocation = () => {
-  //   if (currentLocation && currentLocationMarkerRef.current) {
-  //     currentLocationMarkerRef.current.animateMarkerToCoordinate(
-  //       currentLocation.latitude,
-  //       currentLocation.longitude,
-  //       ANIMATION_DURATION,
-  //     );
+  //     if (
+  //       data.rows &&
+  //       data.rows.length > 0 &&
+  //       data.rows[0].elements &&
+  //       data.rows[0].elements.length > 0
+  //     ) {
+  //       setTravelTimeInfoOD(data.rows[0].elements[0]);
+  //       console.log(data.rows[0].elements[0]);
+  //     } else {
+  //       console.error('Invalid response from the Distance Matrix API:', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching travel time information:', error);
   //   }
+  // };
+
+  // // Fetch travel time information for route from current location to origin
+  // const getTravelTimeCO = async () => {
+  //   if (!origin || !currentLocation) return;
+
+  //   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${currentLocation.latitude},${currentLocation.longitude}&destinations=${origin.location.lat},${origin.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
+  //   const response = await fetch(url);
+  //   const data = await response.json();
+
+  //   setTravelTimeInfoCO(data.rows[0].elements[0]);
   // };
 
   useEffect(() => {
@@ -95,50 +112,71 @@ const Map = ({origin, destination}) => {
 
   useEffect(() => {
     fitToMarkers();
-  }, [origin, destination, currentLocation]);
-
-  useEffect(() => {
-    getTravelTimeOD();
-  }, [origin, destination, GOOGLE_MAPS_API_KEY]);
-
-  useEffect(() => {
-    getTravelTimeCO();
-  }, [origin, currentLocation, GOOGLE_MAPS_API_KEY]);
+  }, [origin, destination, currentLocation, stops]);
 
   // useEffect(() => {
-  //   animateToCurrentLocation();
-  // }, [currentLocation]);
+  //   getTravelTimeOD();
+  // }, [origin, destination, sortedStops, GOOGLE_MAPS_API_KEY]);
+
+  // useEffect(() => {
+  //   getTravelTimeCO();
+  // }, [origin, currentLocation, GOOGLE_MAPS_API_KEY]);
+
+  // Sort stops by distance from origin to destination
+  const [sortedStops, setSortedStops] = useState([]);
+
+  useEffect(() => {
+    if (origin && destination && stops.length > 0) {
+      const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${
+        origin.description
+      }&destination=${destination.description}&waypoints=optimize:true|${stops
+        .map(stop => `${stop.location.lat},${stop.location.lng}`)
+        .join('|')}&key=${GOOGLE_MAPS_API_KEY}`;
+
+      const getSortedStops = async () => {
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.routes && data.routes.length > 0) {
+            const sortedStops = data.routes[0].waypoint_order.map(
+              index => stops[index],
+            );
+            setSortedStops(sortedStops);
+          } else {
+            console.error(
+              'Invalid response from the Directions API:',
+              data.error_message,
+            );
+          }
+        } catch (error) {
+          console.error('Error fetching sorted stops:', error);
+        }
+      };
+
+      getSortedStops();
+    }
+  }, [stops]);
 
   return (
     <MapView
       ref={mapRef}
       initialRegion={INITIAL_REGION}
       mapType="mutedStandard"
-      style={{flex: 1}}>
+      style={{flex: 4 / 5}}>
       {/* MapViewDirections for route between origin and destination */}
       {origin && destination && (
         <MapViewDirections
           origin={origin.description}
           destination={destination.description}
+          waypoints={sortedStops.map(stop => ({
+            latitude: stop.location.lat,
+            longitude: stop.location.lng,
+          }))}
           apikey={GOOGLE_MAPS_API_KEY}
           strokeWidth={3}
           strokeColor="blue"
           lineDashPattern={[0]}
-        />
-      )}
-
-      {/* Marker for current location */}
-      {currentLocation && (
-        <Marker
-          ref={currentLocationMarkerRef}
-          coordinate={{
-            latitude: currentLocation.latitude,
-            longitude: currentLocation.longitude,
-          }}
-          title="Current Location"
-          identifier="currentLocation"
-          description={currentLocationDescription}
-          pinColor="purple"
         />
       )}
 
@@ -157,6 +195,21 @@ const Map = ({origin, destination}) => {
           strokeWidth={3}
           strokeColor="green"
           lineDashPattern={[0]}
+        />
+      )}
+
+      {/* Marker for current location */}
+      {currentLocation && (
+        <Marker
+          ref={currentLocationMarkerRef}
+          coordinate={{
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude,
+          }}
+          title="Current Location"
+          identifier="currentLocation"
+          description={currentLocationDescription}
+          pinColor="purple"
         />
       )}
 
@@ -187,8 +240,23 @@ const Map = ({origin, destination}) => {
         />
       )}
 
-      {/* Marker for displaying travel time information */}
-      {travelTimeInfoOD &&
+      {/* Markers for stops */}
+      {sortedStops.map((stop, index) => (
+        <Marker
+          key={`stop-${index}`}
+          coordinate={{
+            latitude: stop.location.lat,
+            longitude: stop.location.lng,
+          }}
+          title={`Stop ${index + 1}`}
+          identifier={`stop-${index}`}
+          description={stop.description}
+          pinColor="orange"
+        />
+      ))}
+
+      {/* Displaying travel time information between origin and destination */}
+      {/* {travelTimeInfoOD &&
         travelTimeInfoOD.distance &&
         travelTimeInfoOD.duration && (
           <Marker
@@ -205,10 +273,10 @@ const Map = ({origin, destination}) => {
               </Text>
             </View>
           </Marker>
-        )}
+        )} */}
 
-      {/* Marker for displaying travel time information between current location and origin */}
-      {travelTimeInfoCO &&
+      {/* Displaying travel time information between current location and origin */}
+      {/* {travelTimeInfoCO &&
         travelTimeInfoCO.distance &&
         travelTimeInfoCO.duration && (
           <Marker
@@ -225,7 +293,7 @@ const Map = ({origin, destination}) => {
               </Text>
             </View>
           </Marker>
-        )}
+        )} */}
     </MapView>
   );
 };
