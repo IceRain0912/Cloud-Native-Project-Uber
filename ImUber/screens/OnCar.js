@@ -5,15 +5,14 @@ import React, { useState } from "react";
 import Popup from "../components/Popup";
 import styles from "../components/styles";
 
-import Map from "../components/Map";
+import DriverMap from "../components/DriverMap";
 
 const OnCar = ({ navigation }) => {
   const [isArrivalModalVisible, setIsArrivalModalVisible] = useState(false);
 
   const handleMapValues = (values) => {
-    const jsonMapValues = JSON.stringify(values);
     if (
-      values.DriverToOrg.distance.split(" ")[0] < 1.8 &&
+      values.CurToDes.distance.split(" ")[0] < 10 &&
       isArrivalModalVisible == false
     ) {
       toggleArrivalModal();
@@ -42,7 +41,7 @@ const OnCar = ({ navigation }) => {
         />
       </View>
       <View style={{ flex: 1 }}>
-        <Map onMapValues={handleMapValues} />
+        <DriverMap onMapValues={handleMapValues} />
       </View>
     </>
   );
