@@ -9,6 +9,7 @@ import {
     UpdateDateColumn,
   } from 'typeorm';
   import User from './User';
+  import Transaction from './Transaction';
   
   @Entity()
   class Car extends BaseEntity {
@@ -29,8 +30,8 @@ import {
     @OneToOne(type => User, user => user.Car)
     Owner: User;
 
-    @OneToMany(type => Car, Car => Car.Transactions)
-    Transactions: Car;
+    @OneToMany(type => Transaction, transaction=> transaction.Car)
+    Transaction: Transaction[];
   
     @CreateDateColumn() createdAt: string;
   

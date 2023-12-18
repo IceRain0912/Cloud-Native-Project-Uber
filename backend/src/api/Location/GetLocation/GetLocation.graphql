@@ -1,0 +1,9 @@
+type GetLocationResponse {
+  ok: Boolean!
+  error: String
+  location: Location
+}
+
+type Query {
+  GetLocation(LocationID: Int!): GetLocationResponse!
+}

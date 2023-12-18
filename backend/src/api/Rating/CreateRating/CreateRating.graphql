@@ -1,0 +1,9 @@
+type CreateRatingResponse {
+  ok: Boolean!
+  error: String
+  rating: Rating
+}
+
+type Mutation {
+  CreateRating(RaterID: Int!,  RatedPersonID: Int!,  RateStars: Int!,  RouteID: Int!):CreateRatingResponse!
+}

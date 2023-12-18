@@ -1,0 +1,9 @@
+type GetBookResponse {
+  ok: Boolean!
+  error: String
+  book: Book
+}
+
+type Query {
+  GetBook(BookID: Int!): GetBookResponse!
+}
