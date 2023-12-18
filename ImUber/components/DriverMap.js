@@ -14,12 +14,11 @@ const INITIAL_REGION = {
   longitudeDelta: 0.005,
 };
 
-const Map = ({ onMapValues }) => {
+const DriverMap = ({ onMapValues }) => {
   //Route From api
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
   const [stops, setStops] = useState(null);
-  const [driverLocation, setDriverLocation] = useState(null);
 
   useEffect(() => {
     setOrigin({
@@ -75,22 +74,13 @@ const Map = ({ onMapValues }) => {
         description: "新竹巨城購物中心",
       },
     ]);
-
-    setDriverLocation({
-      location: {
-        lat: 24.807918184276982,
-        lng: 120.961006522564,
-      },
-      description: "Driver Location",
-    });
   }, []);
 
   // Inner values
   const mapRef = useRef(null);
   const currentLocationMarkerRef = useRef(null);
   const [travelTimeInfoOD, setTravelTimeInfoOD] = useState(null);
-  const [travelTimeInfoDO, setTravelTimeInfoDO] = useState(null);
-  const [travelTimeInfoCO, setTravelTimeInfoCO] = useState(null);
+  const [travelTimeInfoCD, setTravelTimeInfoCD] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentLocationDescription, setCurrentLocationDescription] =
     useState(null);
@@ -124,14 +114,13 @@ const Map = ({ onMapValues }) => {
 
   // Fit the map to markers and animate to the region containing all markers
   const fitToMarkers = () => {
-    if (!origin || !destination || !currentLocation || !driverLocation) return;
+    if (!origin || !destination || !currentLocation) return;
 
     const stopMarkers = stops.map((stop, index) => `stop-${index}`);
     const markers = [
       "origin",
       "destination",
       "currentLocation",
-      "driverLocation",
       ...stopMarkers,
     ];
     // console.log(markers);
@@ -159,30 +148,17 @@ const Map = ({ onMapValues }) => {
     setTravelTimeInfoOD(data.rows[0].elements[0]);
   };
 
-  // Fetch travel time information using Google Distance Matrix API
-  const getTravelTimeDO = async () => {
-    if (!origin || !driverLocation) return;
-
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${driverLocation.location.lat},${driverLocation.location.lng}&destinations=${origin.location.lat},${origin.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
-    const response = await fetch(url);
-    // console.log(response);
-    const data = await response.json();
-    // console.log(data.rows[0].elements);
-
-    setTravelTimeInfoDO(data.rows[0].elements[0]);
-  };
-
   // Fetch travel time information for route from current location to origin
-  const getTravelTimeCO = async () => {
+  const getTravelTimeCD = async () => {
     if (!origin || !currentLocation) return;
 
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${currentLocation.latitude},${currentLocation.longitude}&destinations=${origin.location.lat},${origin.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${currentLocation.latitude},${currentLocation.longitude}&destinations=${destination.location.lat},${destination.location.lng}&key=${GOOGLE_MAPS_API_KEY}`;
     const response = await fetch(url);
     // console.log(response);
     const data = await response.json();
     // console.log(data.rows[0].elements[0]);
 
-    setTravelTimeInfoCO(data.rows[0].elements[0]);
+    setTravelTimeInfoCD(data.rows[0].elements[0]);
   };
 
   useEffect(() => {
@@ -232,47 +208,33 @@ const Map = ({ onMapValues }) => {
 
   useEffect(() => {
     // Ensure that current location and sorted stops are fetched before calling fitToMarkers
-    if (
-      currentLocation &&
-      origin &&
-      destination &&
-      driverLocation &&
-      sortedStops.length > 0
-    ) {
+    if (currentLocation && origin && destination && sortedStops.length > 0) {
       fitToMarkers();
     }
-  }, [origin, destination, currentLocation, driverLocation, sortedStops]);
+  }, [origin, destination, currentLocation, sortedStops]);
 
   useEffect(() => {
     getTravelTimeOD();
   }, [origin, destination, sortedStops, GOOGLE_MAPS_API_KEY]);
 
   useEffect(() => {
-    getTravelTimeCO();
-  }, [origin, currentLocation, GOOGLE_MAPS_API_KEY]);
-
-  useEffect(() => {
-    getTravelTimeDO();
-  }, [origin, driverLocation, GOOGLE_MAPS_API_KEY]);
+    getTravelTimeCD();
+  }, [destination, currentLocation, GOOGLE_MAPS_API_KEY]);
 
   useEffect(() => {
     // Check if all travel time information is available
-    if (travelTimeInfoCO && travelTimeInfoOD && travelTimeInfoDO) {
+    if (travelTimeInfoCD && travelTimeInfoOD) {
       // Set up an interval for continuous updates
       const intervalId = setInterval(() => {
         // Update values dynamically
         const mapValues = {
-          CusToOrg: {
-            distance: travelTimeInfoCO.distance.text,
-            duration: travelTimeInfoCO.duration.text,
+          CurToDes: {
+            distance: travelTimeInfoCD.distance.text,
+            duration: travelTimeInfoCD.duration.text,
           },
           OrgToDes: {
             distance: travelTimeInfoOD.distance.text,
             duration: travelTimeInfoOD.duration.text,
-          },
-          DriverToOrg: {
-            distance: travelTimeInfoDO.distance.text,
-            duration: travelTimeInfoDO.duration.text,
           },
         };
 
@@ -285,7 +247,7 @@ const Map = ({ onMapValues }) => {
     }
 
     // If any travel time information is not available, do nothing
-  }, [travelTimeInfoCO, travelTimeInfoOD, travelTimeInfoDO, onMapValues]);
+  }, [travelTimeInfoCD, travelTimeInfoOD, onMapValues]);
 
   return (
     <>
@@ -307,24 +269,6 @@ const Map = ({ onMapValues }) => {
             apikey={GOOGLE_MAPS_API_KEY}
             strokeWidth={3}
             strokeColor="blue"
-            lineDashPattern={[0]}
-          />
-        )}
-
-        {/* MapViewDirections for route from current location to origin */}
-        {currentLocation && origin && (
-          <MapViewDirections
-            origin={{
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude,
-            }}
-            destination={{
-              latitude: origin.location.lat,
-              longitude: origin.location.lng,
-            }}
-            apikey={GOOGLE_MAPS_API_KEY}
-            strokeWidth={3}
-            strokeColor="green"
             lineDashPattern={[0]}
           />
         )}
@@ -371,20 +315,6 @@ const Map = ({ onMapValues }) => {
           />
         )}
 
-        {/* Marker for driver location */}
-        {driverLocation && (
-          <Marker
-            coordinate={{
-              latitude: driverLocation.location.lat,
-              longitude: driverLocation.location.lng,
-            }}
-            title="Driver Location"
-            identifier="driverLocation"
-            description={driverLocation.description}
-            pinColor="blue"
-          />
-        )}
-
         {/* Markers for stops */}
         {sortedStops.map((stop, index) => (
           <Marker
@@ -402,19 +332,15 @@ const Map = ({ onMapValues }) => {
       </MapView>
 
       {/* Travel time info */}
-      {travelTimeInfoCO && travelTimeInfoOD && travelTimeInfoDO && (
+      {travelTimeInfoCD && travelTimeInfoOD && (
         <View style={{ flex: 1 / 5 }}>
           <Text style={styles.infoContainer}>
             Origin to Destination: {travelTimeInfoOD.distance.text},{" "}
             {travelTimeInfoOD.duration.text}
           </Text>
           <Text style={styles.infoContainer}>
-            Current Location to Origin: {travelTimeInfoCO.distance.text},{" "}
-            {travelTimeInfoCO.duration.text}
-          </Text>
-          <Text style={styles.infoContainer}>
-            Driver to Origin: {travelTimeInfoDO.distance.text},{" "}
-            {travelTimeInfoDO.duration.text}
+            Current Location to Destination: {travelTimeInfoCD.distance.text},{" "}
+            {travelTimeInfoCD.duration.text}
           </Text>
         </View>
       )}
@@ -422,4 +348,4 @@ const Map = ({ onMapValues }) => {
   );
 };
 
-export default Map;
+export default DriverMap;
