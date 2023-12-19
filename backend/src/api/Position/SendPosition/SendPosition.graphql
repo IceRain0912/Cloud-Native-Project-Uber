@@ -1,9 +1,0 @@
-type SendPosition {
-  ok: Boolean!
-  error: String
-  position: Position
-}
-
-type Mutation {
-  SendPosition(chatId: Int!, text: String!): SendPositionResponse!
-}

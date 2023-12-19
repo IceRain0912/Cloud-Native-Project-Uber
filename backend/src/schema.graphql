@@ -6,8 +6,8 @@ type CreateBookResponse {
 
 type Mutation {
   CreateBook(Title: String!, Author: String!, PageCount: Int!): CreateBookResponse!
-  CreateCar(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int]!, DestinationID: Int!): CreateCarResponse!
-  CreateLocation(Name: String!, Longtitude: Int!, Latitude: Int!): CreateLocationResponse!
+  CreateCar(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateCarResponse!
+  CreateLocation(Name: String!, Longtitude: Float!, Latitude: Float!): CreateLocationResponse!
   CreateRating(RaterID: Int!, RatedPersonID: Int!, RateStars: Int!, RouteID: Int!): CreateRatingResponse!
   CreateRide(MaximumCapacity: Int!, DriverID: Int!): CreateRideResponse!
   CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!

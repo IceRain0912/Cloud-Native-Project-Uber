@@ -1,9 +1,0 @@
-type UpdatePositionResponse {
-  ok: Boolean!
-  error: String
-  position: Position
-}
-
-type Mutation {
-  UpdatePosition(ID: Int!, Longtitude: Float!,  Latitude: Float!):UpdatePositionResponse!
-}

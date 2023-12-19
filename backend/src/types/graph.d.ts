@@ -1,4 +1,4 @@
-export const typeDefs = ["type CreateBookResponse {\n  ok: Boolean!\n  error: String\n  book: Book\n}\n\ntype Mutation {\n  CreateBook(Title: String!, Author: String!, PageCount: Int!): CreateBookResponse!\n  CreateCar(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int]!, DestinationID: Int!): CreateCarResponse!\n  CreateLocation(Name: String!, Longtitude: Int!, Latitude: Int!): CreateLocationResponse!\n  CreateRating(RaterID: Int!, RatedPersonID: Int!, RateStars: Int!, RouteID: Int!): CreateRatingResponse!\n  CreateRide(MaximumCapacity: Int!, DriverID: Int!): CreateRideResponse!\n  CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!\n  CreateTransaction(PassengerID: Int!, RouteID: Int!, Payment: String!, DepartureTime: String!, CarID: Int!, RequestTime: String!): CreateTransactionResponse!\n  EmailSignIn(PhoneNumber: String!, Password: String!): EmailSignInResponse!\n  EmailSignUp(Name: String!, Password: String!, Sex: Int!, PhoneNumber: String!): EmailSignUpResponse!\n}\n\ntype GetBookResponse {\n  ok: Boolean!\n  error: String\n  book: Book\n}\n\ntype Query {\n  GetBook(BookID: Int!): GetBookResponse!\n  GetCar(CarID: Int!): GetCarResponse!\n  GetLocation(LocationID: Int!): GetLocationResponse!\n  GetRating(RateID: Int!): GetRatingResponse!\n  GetRide(RideID: Int!): GetRideResponse!\n  GetRoute(RouteID: Int!): GetRouteResponse!\n  GetTransaction(TransactionID: Int!): GetTransactionResponse!\n  GetUser(UserID: Int!): GetUserResponse!\n}\n\ntype Book {\n  ID: Int!\n  Title: String!\n  Author: String!\n  PageCount: Int!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateCarResponse {\n  ok: Boolean!\n  error: String\n  car: Car\n}\n\ntype GetCarResponse {\n  ok: Boolean!\n  error: String\n  car: Car\n}\n\ntype Car {\n  ID: Int!\n  Comp: String!\n  Model: String!\n  PlateNum: String!\n  Capacity: Int!\n  Owner: User\n  Transaction: [Transaction]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateLocationResponse {\n  ok: Boolean!\n  error: String\n  location: Location\n}\n\ntype GetLocationResponse {\n  ok: Boolean!\n  error: String\n  location: Location\n}\n\ntype Location {\n  ID: Int!\n  Name: String!\n  Longtitude: Float!\n  Latitude: Float!\n  LocationAsStarting: Route\n  LocationAsMidpoints: [Route]\n  LocationAsDistination: Route\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateRatingResponse {\n  ok: Boolean!\n  error: String\n  rating: Rating\n}\n\ntype GetRatingResponse {\n  ok: Boolean!\n  error: String\n  rating: Rating\n}\n\ntype Rating {\n  ID: Int!\n  RaterID: Int!\n  RatedPersonID: Int!\n  RaterComments: String!\n  RouteID: Int!\n  Rater: User!\n  Rated: User!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateRideResponse {\n  ok: Boolean!\n  error: String\n  ride: Ride\n}\n\ntype GetRideResponse {\n  ok: Boolean!\n  error: String\n  ride: Ride\n}\n\ntype Ride {\n  ID: Int!\n  TransactionID: Int!\n  DriverID: Int!\n  MaximumCapacity: Int!\n  RouteID: Int!\n  Driver: User!\n  Transaction: [Transaction]!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateRouteResponse {\n  ok: Boolean!\n  error: String\n  route: Route\n}\n\ntype GetRouteResponse {\n  ok: Boolean!\n  error: String\n  route: Route\n}\n\ntype Route {\n  ID: Int!\n  DriverID: Int!\n  StartingPointID: Int!\n  MiddlePointsID: [Int]\n  DestinationID: Int!\n  Starting: Location\n  MiddlePoints: [Location]\n  Distination: Location\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateTransactionResponse {\n  ok: Boolean!\n  error: String\n  transaction: Transaction\n}\n\ntype GetTransactionResponse {\n  ok: Boolean!\n  error: String\n  transaction: Transaction\n}\n\ntype Transaction {\n  ID: Int!\n  PassengerID: Int!\n  Payment: String!\n  RouteID: Int!\n  DepartureTime: String!\n  ArrivalTime: String!\n  CarID: Int!\n  Status: TransStatus!\n  RequestTime: String!\n  Passenger: User!\n  Ride: Ride!\n  Car: Car!\n  createdAt: String!\n  updatedAt: String\n}\n\nenum TransStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\ntype EmailSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetUserResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype User {\n  ID: Int!\n  Name: String!\n  Password: String\n  Sex: Int\n  Age: Int\n  DriverRating: Int\n  PassengerRating: Int\n  DriverPreferredRouteID: Int\n  PassengerPreferredRouteID: Int\n  CarID: Int\n  EmailAddress: String\n  PhoneNumber: String\n  CreditCardNumber: String\n  RidesAsDriver: [Ride]\n  Transaction: [Transaction]\n  Car: Car!\n  RatingAsRater: [Rating]\n  RatingAsRated: [Rating]\n  createdAt: String!\n  updatedAt: String\n}\n"];
+export const typeDefs = ["type CreateBookResponse {\n  ok: Boolean!\n  error: String\n  book: Book\n}\n\ntype Mutation {\n  CreateBook(Title: String!, Author: String!, PageCount: Int!): CreateBookResponse!\n  CreateCar(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateCarResponse!\n  CreateLocation(Name: String!, Longtitude: Float!, Latitude: Float!): CreateLocationResponse!\n  CreateRating(RaterID: Int!, RatedPersonID: Int!, RateStars: Int!, RouteID: Int!): CreateRatingResponse!\n  CreateRide(MaximumCapacity: Int!, DriverID: Int!): CreateRideResponse!\n  CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!\n  CreateTransaction(PassengerID: Int!, RouteID: Int!, Payment: String!, DepartureTime: String!, CarID: Int!, RequestTime: String!): CreateTransactionResponse!\n  EmailSignIn(PhoneNumber: String!, Password: String!): EmailSignInResponse!\n  EmailSignUp(Name: String!, Password: String!, Sex: Int!, PhoneNumber: String!): EmailSignUpResponse!\n}\n\ntype GetBookResponse {\n  ok: Boolean!\n  error: String\n  book: Book\n}\n\ntype Query {\n  GetBook(BookID: Int!): GetBookResponse!\n  GetCar(CarID: Int!): GetCarResponse!\n  GetLocation(LocationID: Int!): GetLocationResponse!\n  GetRating(RateID: Int!): GetRatingResponse!\n  GetRide(RideID: Int!): GetRideResponse!\n  GetRoute(RouteID: Int!): GetRouteResponse!\n  GetTransaction(TransactionID: Int!): GetTransactionResponse!\n  GetUser(UserID: Int!): GetUserResponse!\n}\n\ntype Book {\n  ID: Int!\n  Title: String!\n  Author: String!\n  PageCount: Int!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateCarResponse {\n  ok: Boolean!\n  error: String\n  car: Car\n}\n\ntype GetCarResponse {\n  ok: Boolean!\n  error: String\n  car: Car\n}\n\ntype Car {\n  ID: Int!\n  Comp: String!\n  Model: String!\n  PlateNum: String!\n  Capacity: Int!\n  Owner: User\n  Transaction: [Transaction]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateLocationResponse {\n  ok: Boolean!\n  error: String\n  location: Location\n}\n\ntype GetLocationResponse {\n  ok: Boolean!\n  error: String\n  location: Location\n}\n\ntype Location {\n  ID: Int!\n  Name: String!\n  Longtitude: Float!\n  Latitude: Float!\n  LocationAsStarting: Route\n  LocationAsMidpoints: [Route]\n  LocationAsDistination: Route\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateRatingResponse {\n  ok: Boolean!\n  error: String\n  rating: Rating\n}\n\ntype GetRatingResponse {\n  ok: Boolean!\n  error: String\n  rating: Rating\n}\n\ntype Rating {\n  ID: Int!\n  RaterID: Int!\n  RatedPersonID: Int!\n  RaterComments: String!\n  RouteID: Int!\n  Rater: User!\n  Rated: User!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateRideResponse {\n  ok: Boolean!\n  error: String\n  ride: Ride\n}\n\ntype GetRideResponse {\n  ok: Boolean!\n  error: String\n  ride: Ride\n}\n\ntype Ride {\n  ID: Int!\n  TransactionID: Int!\n  DriverID: Int!\n  MaximumCapacity: Int!\n  RouteID: Int!\n  Driver: User!\n  Transaction: [Transaction]!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateRouteResponse {\n  ok: Boolean!\n  error: String\n  route: Route\n}\n\ntype GetRouteResponse {\n  ok: Boolean!\n  error: String\n  route: Route\n}\n\ntype Route {\n  ID: Int!\n  DriverID: Int!\n  StartingPointID: Int!\n  MiddlePointsID: [Int]\n  DestinationID: Int!\n  Starting: Location\n  MiddlePoints: [Location]\n  Distination: Location\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateTransactionResponse {\n  ok: Boolean!\n  error: String\n  transaction: Transaction\n}\n\ntype GetTransactionResponse {\n  ok: Boolean!\n  error: String\n  transaction: Transaction\n}\n\ntype Transaction {\n  ID: Int!\n  PassengerID: Int!\n  Payment: String!\n  RouteID: Int!\n  DepartureTime: String!\n  ArrivalTime: String!\n  CarID: Int!\n  Status: TransStatus!\n  RequestTime: String!\n  Passenger: User!\n  Ride: Ride!\n  Car: Car!\n  createdAt: String!\n  updatedAt: String\n}\n\nenum TransStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\ntype EmailSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetUserResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype User {\n  ID: Int!\n  Name: String!\n  Password: String\n  Sex: Int\n  Age: Int\n  DriverRating: Int\n  PassengerRating: Int\n  DriverPreferredRouteID: Int\n  PassengerPreferredRouteID: Int\n  CarID: Int\n  EmailAddress: String\n  PhoneNumber: String\n  CreditCardNumber: String\n  RidesAsDriver: [Ride]\n  Transaction: [Transaction]\n  Car: Car!\n  RatingAsRater: [Rating]\n  RatingAsRated: [Rating]\n  createdAt: String!\n  updatedAt: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
@@ -9,16 +9,6 @@ export interface Query {
   GetRide: GetRideResponse;
   GetRoute: GetRouteResponse;
   GetTransaction: GetTransactionResponse;
-  GetRide: GetRideResponse;
-  GetRating: GetRatingResponse;
-  GetLocation: GetLocationResponse;
-  GetPosition: GetPositionResponse;
-}
-
-export interface GetBookResponse {
-  ok: boolean;
-  error: string | null;
-  book: Book | null;
   GetUser: GetUserResponse;
 }
 
@@ -85,13 +75,6 @@ export interface Car {
   Transaction: Array<Transaction> | null;
   createdAt: string;
   updatedAt: string | null;
-}
-
-export interface Position {
-  positionID: number;
-  UserID: number;
-  Longtitude: number;
-  Latitude: number;
 }
 
 export interface User {
@@ -221,12 +204,6 @@ export interface GetUserResponse {
   user: User | null;
 }
 
-export interface GetPositionResponse {
-  ok: boolean;
-  error: string | null;
-  position: Position | null;
-}
-
 export interface Mutation {
   CreateBook: CreateBookResponse;
   CreateCar: CreateCarResponse;
@@ -237,20 +214,6 @@ export interface Mutation {
   CreateTransaction: CreateTransactionResponse;
   EmailSignIn: EmailSignInResponse;
   EmailSignUp: EmailSignUpResponse;
-  CreatePosition: CreatePositionResponse;
-  UpdatePosition: UpdatePositionResponse;
-}
-
-export interface CreatePositionMutationArgs {
-  UserID: number;
-  Longtitude: number;
-  Latitude: number;
-}
-
-export interface UpdatePositionMutationArgs {
-  positionID: number;
-  Longtitude: number;
-  Latitude: number;
 }
 
 export interface CreateBookMutationArgs {
@@ -263,7 +226,7 @@ export interface CreateCarMutationArgs {
   Comp: string;
   Model: string;
   PlateNum: string;
-  Capacity: number
+  Capacity: number;
 }
 
 export interface CreateLocationMutationArgs {
@@ -312,17 +275,6 @@ export interface EmailSignUpMutationArgs {
   PhoneNumber: string;
 }
 
-export interface CreatePositionResponse {
-  ok: boolean;
-  error: string | null;
-  position: Position | null;
-}
-
-export interface UpdatePositionResponse {
-  ok: boolean;
-  error: string | null;
-  position: Position | null;
-}
 export interface CreateBookResponse {
   ok: boolean;
   error: string | null;
