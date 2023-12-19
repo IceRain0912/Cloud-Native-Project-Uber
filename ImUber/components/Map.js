@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 import styles from "../components/styles";
 
 import { useQuery, gql, useMutation } from "@apollo/client";
-import GET_BOOK from "../graphql/queries.js";
+import { GET_BOOK, GET_USER } from "../graphql";
 
 // const CREATE_LOCATION = gql`
 //   mutation CreateLocation(
@@ -23,21 +23,6 @@ import GET_BOOK from "../graphql/queries.js";
 //         Name
 //         Longtitude
 //         Latitude
-//       }
-//     }
-//   }
-// `;
-
-// const GET_BOOK = gql`
-//   query GetBook($BookID: Int!) {
-//     GetBook(BookID: $BookID) {
-//       ok
-//       error
-//       book {
-//         ID
-//         Title
-//         Author
-//         PageCount
 //       }
 //     }
 //   }
@@ -65,18 +50,25 @@ const Map = ({ onMapValues }) => {
   //     Longtitude: 120.97158829773566,
   //     Latitude: 24.801850638002016,
   //   },
+  //   onCompleted: (data) => {
+  //     // Handle successful mutation completion
+  //     console.log("Mutation completed successfully:", data);
+  //     // You can perform additional actions based on the successful mutation here
+  //   },
+  //   onError: (error) => {
+  //     // Handle mutation error
+  //     console.error("Mutation error:", error.message);
+  //     // You can perform additional error handling here
+  //   },
   // });
-  // console.log(data);
-  // console.log(loading);
-  // console.log(error);
-  const { loading, error, data } = useQuery(GET_BOOK, {
+  const { loading, error, data } = useQuery(GET_USER, {
     variables: {
-      BookID: 1,
+      UserID: 1,
     },
   });
   console.log(data);
-  // console.log(loading);
-  // console.log(error);
+  console.log(loading);
+  console.log(error);
 
   useEffect(() => {
     setOrigin({
