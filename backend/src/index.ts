@@ -19,8 +19,7 @@ const appOptions : Options = {
   subscriptions: {
     path: SUBSCRIPTION_ENDPOINT,
     onConnect: async connectionParams => {
-      const token = connectionParams["X-JWT"];
-      console.log("token: ", token)
+      const token = connectionParams["authentication"];
       if (token) {
         const user = await decodeJWT(token);
         if (user) {

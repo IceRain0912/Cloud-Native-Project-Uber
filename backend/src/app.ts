@@ -17,6 +17,7 @@ class App {
       schema,
       context: req => {
         const { connection: { context = null } = {} } = req;
+        // console.log(req.request)
         return {
           req: req.request,
           pubSub: this.pubSub,
@@ -39,7 +40,6 @@ class App {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    // console.log(req)
     const token = req.get("authorization");
     if (token) {
       const user = await decodeJWT(token);
