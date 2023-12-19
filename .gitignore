@@ -1,3 +1,5 @@
 
 .DS_Store
 ImUber/.env
+node_modules/
+

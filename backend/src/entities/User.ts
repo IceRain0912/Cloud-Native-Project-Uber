@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import {
-  BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn
+  BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, JoinColumn
 } from 'typeorm';
 import Car from './Car';
 import Transaction from './Transaction';
@@ -19,16 +19,16 @@ class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   Password: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: "int", nullable: true })
   Sex: number;
 
   @Column({ type: "int", nullable: true })
   Age: number;
 
-  @Column({ type: "int", nullable: true  })
+  @Column({ type: "int", nullable: true, default: 0  })
   DriverRating: number;
 
-  @Column({ type: "int", nullable: true  })
+  @Column({ type: "int", nullable: true, default: 0  })
   PassengerRating: number;
 
   @Column({ type: "int", nullable: true  })
@@ -53,9 +53,10 @@ class User extends BaseEntity {
   RidesAsDriver: Ride[];
 
   @OneToMany(type => Transaction, Transaction => Transaction.Passenger)
-  Transactions: Transaction[];
+  Transaction: Transaction[];
 
   @OneToOne(type => Car, Car => Car.Owner)
+  @JoinColumn()
   Car: Car;
 
   @OneToMany(type => Rating, Rating => Rating.Rater)

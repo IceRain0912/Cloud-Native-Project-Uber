@@ -3,7 +3,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -32,8 +31,7 @@ class Ride extends BaseEntity {
   Driver: User;
 
   @OneToMany(type => Transaction, transaction => transaction.Ride)
-  @JoinColumn()
-  Transactions: Transaction[];
+  Transaction: Transaction[];
 
   @CreateDateColumn() createdAt: string;
 

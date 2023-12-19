@@ -1,0 +1,9 @@
+type GetTransactionResponse {
+  ok: Boolean!
+  error: String
+  transaction: Transaction
+}
+
+type Query {
+  GetTransaction(TransactionID: Int!): GetTransactionResponse!
+}

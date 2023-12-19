@@ -1,0 +1,9 @@
+type GetRouteResponse {
+  ok: Boolean!
+  error: String
+  route: Route
+}
+
+type Query {
+  GetRoute(RouteID: Int!): GetRouteResponse!
+}
