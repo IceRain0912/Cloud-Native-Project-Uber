@@ -6,6 +6,15 @@ import { GOOGLE_MAPS_API_KEY } from "@env";
 import * as Location from "expo-location";
 import styles from "../components/styles";
 
+import { useQuery, gql } from "@apollo/client";
+
+// Your GraphQL query
+// const GET_ROUTE_INFO = gql`
+//   query GetRouteInfo {
+//     // Your GraphQL query to get route information
+//   }
+// `;
+
 const EDGE_PADDING = { top: 50, right: 50, bottom: 50, left: 50 };
 const INITIAL_REGION = {
   latitude: 25.017,
@@ -20,6 +29,23 @@ const Map = ({ onMapValues }) => {
   const [destination, setDestination] = useState(null);
   const [stops, setStops] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
+
+  // Fetch data from GraphQL server
+  // const { loading, error, data } = useQuery(GET_ROUTE_INFO);
+
+  // useEffect(() => {
+  //   if (!loading && !error && data && data.routeInfo) {
+  //     // Extract data from the GraphQL response and set state
+  //     const { origin, destination, stops, driverLocation } = data.routeInfo;
+  //     setOrigin(origin);
+  //     setDestination(destination);
+  //     setStops(stops);
+  //     setDriverLocation(driverLocation);
+  //   }
+  // }, [loading, error, data]);
+
+  // if (loading) return <Text>Loading...</Text>;
+  // if (error) return <Text>Error: {error.message}</Text>;
 
   useEffect(() => {
     setOrigin({
