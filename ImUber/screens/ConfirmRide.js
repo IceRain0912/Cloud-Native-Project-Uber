@@ -27,6 +27,10 @@ const ConfirmRide = ({ navigation }) => {
     navigation.navigate("Main");
   };
 
+  const addLineBot = () => {
+    Linking.openURL('https://line.me/R/ti/p/%40150qfayv');
+  }
+
   const handleMapValues = (values) => {
     setDistance(values.OrgToDes.distance);
     setTime(values.OrgToDes.duration);
@@ -51,7 +55,7 @@ const ConfirmRide = ({ navigation }) => {
           <Text style={styles.text}>$ {parseInt(distance) * 20}</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <PrimaryButton label={"Confirm payment"} onPress={payTheFare} />
+          <PrimaryButton label={"Confirm payment"} onPress={addLineBot} />
           <SecondaryButton label={"Cancel ride"} onPress={cancelPayment} />
         </View>
       </View>
