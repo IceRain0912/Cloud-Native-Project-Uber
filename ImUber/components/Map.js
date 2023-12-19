@@ -6,6 +6,28 @@ import { GOOGLE_MAPS_API_KEY } from "@env";
 import * as Location from "expo-location";
 import styles from "../components/styles";
 
+import { useQuery, gql, useMutation } from "@apollo/client";
+import { GET_BOOK, GET_USER } from "../graphql";
+
+// const CREATE_LOCATION = gql`
+//   mutation CreateLocation(
+//     $Name: String!
+//     $Longtitude: Float!
+//     $Latitude: Float!
+//   ) {
+//     CreateLocation(Name: $Name, Longtitude: $Longtitude, Latitude: $Latitude) {
+//       ok
+//       error
+//       location {
+//         ID
+//         Name
+//         Longtitude
+//         Latitude
+//       }
+//     }
+//   }
+// `;
+
 const EDGE_PADDING = { top: 50, right: 50, bottom: 50, left: 50 };
 const INITIAL_REGION = {
   latitude: 25.017,
@@ -20,6 +42,33 @@ const Map = ({ onMapValues }) => {
   const [destination, setDestination] = useState(null);
   const [stops, setStops] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
+
+  // Fetch data from GraphQL server
+  // const { loading, error, data } = useMutation(CREATE_LOCATION, {
+  //   variables: {
+  //     Name: "新竹火車站",
+  //     Longtitude: 120.97158829773566,
+  //     Latitude: 24.801850638002016,
+  //   },
+  //   onCompleted: (data) => {
+  //     // Handle successful mutation completion
+  //     console.log("Mutation completed successfully:", data);
+  //     // You can perform additional actions based on the successful mutation here
+  //   },
+  //   onError: (error) => {
+  //     // Handle mutation error
+  //     console.error("Mutation error:", error.message);
+  //     // You can perform additional error handling here
+  //   },
+  // });
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: {
+      UserID: 1,
+    },
+  });
+  console.log(data);
+  console.log(loading);
+  console.log(error);
 
   useEffect(() => {
     setOrigin({

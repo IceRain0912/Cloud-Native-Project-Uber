@@ -1,6 +1,0 @@
-type Position {
-  ID: Int!
-  UserID: Int!
-  Longtitude: Float!
-  Latitude: Float!
-}

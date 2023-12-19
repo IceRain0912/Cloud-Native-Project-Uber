@@ -1,9 +1,9 @@
 type CreateRouteResponse {
   ok: Boolean!
   error: String
-  route: Route
+  route: String
 }
 
 type Mutation {
-  CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!
+  CreateRoute(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int], DestinationID: Int): CreateRouteResponse!
 }
