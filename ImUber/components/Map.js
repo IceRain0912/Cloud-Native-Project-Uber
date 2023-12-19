@@ -6,26 +6,27 @@ import { GOOGLE_MAPS_API_KEY } from "@env";
 import * as Location from "expo-location";
 import styles from "../components/styles";
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
+// import GET_BOOK from "../graphql/queries";
 
-const CREATE_LOCATION = gql`
-  mutation CreateLocation(
-    $Name: String!
-    $Longtitude: Float!
-    $Latitude: Float!
-  ) {
-    CreateLocation(Name: $Name, Longtitude: $Longtitude, Latitude: $Latitude) {
-      ok
-      error
-      location {
-        ID
-        Name
-        Longtitude
-        Latitude
-      }
-    }
-  }
-`;
+// const CREATE_LOCATION = gql`
+//   mutation CreateLocation(
+//     $Name: String!
+//     $Longtitude: Float!
+//     $Latitude: Float!
+//   ) {
+//     CreateLocation(Name: $Name, Longtitude: $Longtitude, Latitude: $Latitude) {
+//       ok
+//       error
+//       location {
+//         ID
+//         Name
+//         Longtitude
+//         Latitude
+//       }
+//     }
+//   }
+// `;
 
 const EDGE_PADDING = { top: 50, right: 50, bottom: 50, left: 50 };
 const INITIAL_REGION = {
@@ -43,7 +44,7 @@ const Map = ({ onMapValues }) => {
   const [driverLocation, setDriverLocation] = useState(null);
 
   // Fetch data from GraphQL server
-  // const { loading, error, data } = useQuery(CREATE_LOCATION, {
+  // const { loading, error, data } = useMutation(CREATE_LOCATION, {
   //   variables: {
   //     Name: "新竹火車站",
   //     Longtitude: 120.97158829773566,
