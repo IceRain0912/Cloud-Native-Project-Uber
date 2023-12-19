@@ -1,8 +1,9 @@
+// react native and vlors
 import React from "react";
 import { useColorScheme } from "react-native";
-
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
+// page navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ItemList from "./ItemList";
@@ -17,6 +18,9 @@ import PessengerTrackRide from "./screens/PessengerTrackRide.js";
 import OnCar from "./screens/OnCar.js";
 import DriverTrackRide from "./screens/DriverTrackRide.js";
 
+// apollo client
+import { CustomApolloProvider, client } from "./apollo"; // Import Apollo setup
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -27,21 +31,23 @@ const App = () => {
   };
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="DriverList" component={DriverList} />
-        <Stack.Screen name="ConfirmRide" component={ConfirmRide} />
-        <Stack.Screen
-          name="PessengerTrackRide"
-          component={PessengerTrackRide}
-        />
-        <Stack.Screen name="OnCar" component={OnCar} />
-        <Stack.Screen name="Rating" component={Rating} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <CustomApolloProvider client={client}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {/* <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Main" component={Main} />
+          <Stack.Screen name="DriverList" component={DriverList} />
+          <Stack.Screen name="ConfirmRide" component={ConfirmRide} /> */}
+          <Stack.Screen
+            name="PessengerTrackRide"
+            component={PessengerTrackRide}
+          />
+          <Stack.Screen name="OnCar" component={OnCar} />
+          <Stack.Screen name="Rating" component={Rating} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </CustomApolloProvider>
   );
 };
 
