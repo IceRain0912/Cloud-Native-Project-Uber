@@ -1,0 +1,9 @@
+type CreateRideResponse {
+  ok: Boolean!
+  error: String
+  ride: Ride
+}
+
+type Mutation {
+    CreateRide(MaximumCapacity: Int!, DriverID: Int!): CreateRideResponse!
+}

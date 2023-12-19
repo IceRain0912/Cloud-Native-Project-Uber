@@ -1,0 +1,9 @@
+type GetRatingResponse {
+  ok: Boolean!
+  error: String
+  rating: Rating
+}
+
+type Query {
+  GetRating(RateID: Int!): GetRatingResponse!
+}

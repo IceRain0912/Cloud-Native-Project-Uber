@@ -13,8 +13,8 @@ type User {
   PhoneNumber: String
   CreditCardNumber: String
   RidesAsDriver: [Ride]
-  Transactions: [Transaction]
-  Car: [Car]!
+  Transaction: [Transaction]
+  Car: Car!
   RatingAsRater: [Rating]
   RatingAsRated: [Rating]
   createdAt: String!

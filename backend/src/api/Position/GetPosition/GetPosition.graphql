@@ -1,0 +1,9 @@
+type GetPositionResponse {
+  ok: Boolean!
+  error: String
+  position: Position
+}
+
+type Query {
+  GetPosition: GetPositionResponse!
+}

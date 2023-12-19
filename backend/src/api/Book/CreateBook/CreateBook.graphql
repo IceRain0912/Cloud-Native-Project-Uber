@@ -1,0 +1,9 @@
+type CreateBookResponse {
+  ok: Boolean!
+  error: String
+  book: Book
+}
+
+type Mutation {
+  CreateBook(Title: String!, Author: String!, PageCount: Int!): CreateBookResponse!
+}

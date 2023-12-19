@@ -17,7 +17,8 @@ const connectionOptions: ConnectionOptions = {
   host: DB_ENDPOINT || 'localhost',
   port: 5432,
   username: DB_USERNAME || 'user',
-  password: DB_PASSWORD || ''
+  password: DB_PASSWORD || '',
+  ssl: true,
 };
 
 export default connectionOptions;
