@@ -1,102 +1,161 @@
 import { gql } from '@apollo/client';
 
 export const GET_BOOK = gql`
-  query ($ID: ID) {
-    Book (ID: $ID) {
-        ID,
-        Title,
-        Author,
-        PageCount,
-        createdAt,
-        updatedAt
+  query GetBook($BookID: Int!) {
+    GetBook(BookID: $BookID) {
+      ok
+      error
+      book {
+        ID
+        Title
+        Author
+        PageCount
+      }
     }
   }
 `;
 
 export const GET_CAR = gql`
-  query ($ID: ID) {
-    Car (ID: $ID) {
+  query GetCar($CarID: Int!) {
+    GetCar(CarID: $CarID) {
+      ok
+      error
+      car{
         ID,
         Comp,
         Model,
         PlateNum,
         Capacity,
-        Owner,
-        Transaction,
+        Owner{
+          ID,
+          Name
+        },
+        Transaction{
+          ID
+        },
         createdAt,
         updatedAt
+      }
     }
   }
 `;
 
 export const GET_LOCATION = gql`
-  query ($ID: ID) {
-    Location (ID: $ID) {
+  query GetLocation($LocationID: Int!) {
+    GetLocation(LocationID: $LocationID) {
+      ok
+      error
+      location{
         ID,
         Name,
         Longtitude,
         Latitude,
-        LocationAsStarting,
-        LocationAsMidpoints,
-        LocationAsDistination,
+        LocationAsStarting{
+          ID,
+          DriverID,
+          StartingPointID,
+        },
+        LocationAsMidpoints{
+          ID,
+          DriverID,
+          MiddlePointsID,
+        },
+        LocationAsDistination{
+          ID,
+          DriverID,
+          DestinationID,
+        },
         createdAt,
         updatedAt,
+      }
     }
   }
 `;
 
 export const GET_RATING = gql`
-  query ($ID: ID) {
-    Location (ID: $ID) {
+  query GetRating($RateID: Int!) {
+    GetRating(RateID: $RateID) {
+      ok
+      error
+      rating{
         ID,
         RaterID,
         RatedPersonID,
         RaterComments,
         RouteID,
-        Rater,
-        Rated,
+        Rater{
+          ID,
+          Name,
+        },
+        Rated{
+          ID,
+          Name,
+        },
         createdAt,
         updatedAt,
+      }
     }
   }
 `;
 
 export const GET_RIDE = gql`
-  query ($ID: ID) {
-    Ride (ID: $ID) {
+  query GetRide($RideID: Int!) {
+    GetRide(RideID: $RideID) {
+      ok
+      error
+      ride{
         ID,
         TransactionID,
         DriverID,
         MaximumCapacity,
         RouteID,
-        Driver,
-        Transactions,
+        Driver{
+          ID,
+          Name
+        },
+        Transaction{
+          ID
+        },
         createdAt,
         updatedAt
+      }
     }
   }
 `;
 
 export const GET_ROUTE = gql`
-  query ($ID: ID) {
-    Route (ID: $ID) {
+  query GetRoute($RouteID: Int!) {
+    GetRoute(RouteID: $RouteID) {
+      ok
+      error
+      route{
         ID,
         DriverID,
         StartingPointID,
         MiddlePointsID,
         DestinationID,
-        Starting,
-        MiddlePoints,
-        Distination,
+        Starting{
+          ID
+        },
+        MiddlePoints{
+          ID
+        },
+        Distination{
+          ID
+        },
         createdAt,
         updatedAt
+      }
     }
   }
 `;
 
 export const GET_TRANSACTION = gql`
-  query ($ID: ID) {
-    Transaction (ID: $ID) {
+  query GetTransaction($TransactionID: Int!) {
+    GetTransaction(TransactionID: $TransactionID) {
+      ok
+      error
+      transaction{
         ID,
         PassengerID,
         Payment,
@@ -106,18 +165,29 @@ export const GET_TRANSACTION = gql`
         CarID,
         Status,
         RequestTime,
-        Passenger,
-        Ride,
-        Car,
+        Passenger{
+          ID,
+          Name
+        },
+        Ride{
+          ID
+        },
+        Car{
+          ID
+        },
         createdAt,
         updatedAt,
+      }
     }
   }
 `;
 
 export const GET_USER = gql`
-  query ($ID: ID) {
-    User (ID: $ID) {
+  query GetUser($UserID: Int!) {
+    GetUser(UserID: $UserID) {
+      ok
+      error
+      user{
         ID,
         Name,
         Password,
@@ -131,13 +201,23 @@ export const GET_USER = gql`
         EmailAddress,
         PhoneNumber,
         CreditCardNumber,
-        RidesAsDriver,
-        Transactions,
-        Car,
-        RatingAsRater,
-        RatingAsRated,
+        RidesAsDriver{
+          ID
+        },
+        Transaction{
+          ID
+        },
+        Car{
+          ID
+        },
+        RatingAsRater{
+          ID
+        },
+        RatingAsRated{
+          ID
+        },
         createdAt,
         updatedAt
+      }
     }
-  }
 `;

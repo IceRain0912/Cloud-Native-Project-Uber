@@ -6,8 +6,8 @@ export {
     CREATE_RIDE,
     CREATE_ROUTE,
     CREATE_TRANSACTION,
-    EMAIL_SIGN_IN,
-    EMAIL_SIGN_UP
+    EMAIL_SIGNIN,
+    EMAIL_SIGNUP
 } from './mutations';
 
 export { 
