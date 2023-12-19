@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 import styles from "../components/styles";
 
 import { useQuery, gql, useMutation } from "@apollo/client";
-// import GET_BOOK from "../graphql/queries";
+import GET_BOOK from "../graphql/queries.js";
 
 // const CREATE_LOCATION = gql`
 //   mutation CreateLocation(
@@ -23,6 +23,21 @@ import { useQuery, gql, useMutation } from "@apollo/client";
 //         Name
 //         Longtitude
 //         Latitude
+//       }
+//     }
+//   }
+// `;
+
+// const GET_BOOK = gql`
+//   query GetBook($BookID: Int!) {
+//     GetBook(BookID: $BookID) {
+//       ok
+//       error
+//       book {
+//         ID
+//         Title
+//         Author
+//         PageCount
 //       }
 //     }
 //   }
@@ -52,6 +67,14 @@ const Map = ({ onMapValues }) => {
   //   },
   // });
   // console.log(data);
+  // console.log(loading);
+  // console.log(error);
+  const { loading, error, data } = useQuery(GET_BOOK, {
+    variables: {
+      BookID: 1,
+    },
+  });
+  console.log(data);
   // console.log(loading);
   // console.log(error);
 
