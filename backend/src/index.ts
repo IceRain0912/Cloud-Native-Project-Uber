@@ -20,6 +20,7 @@ const appOptions : Options = {
     path: SUBSCRIPTION_ENDPOINT,
     onConnect: async connectionParams => {
       const token = connectionParams["authentication"];
+      console.log("token: ", token)
       if (token) {
         const user = await decodeJWT(token);
         if (user) {
