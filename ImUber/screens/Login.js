@@ -3,6 +3,8 @@ import React from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import UnderlineButton from "../components/UnderlineButton";
 import styles from "../components/styles";
+import axios from 'axios';
+import * as Keychain from 'react-native-keychain';
 
 // const styles = StyleSheet.create({
 //     container: {
@@ -43,6 +45,26 @@ const Login = ({ navigation }) => {
 
     const [name, onChangeName] = React.useState('');
     const [password, onChangePassword] = React.useState('');
+
+    const handleLogin = async () => {
+        try {
+          const response = await axios.post('https://your-api/login', {
+            username,
+            password,
+          });
+    
+          const { token } = response.data;
+    
+          // Save the JWT token securely
+          await Keychain.setGenericPassword('jwtToken', token);
+    
+          // Navigate to the next screen or perform other actions after successful login
+          navigation.navigate('Home');
+        } catch (error) {
+          console.error('Login failed:', error);
+        }
+    };
+    
 
     return (
         <View style={styles.container}>
