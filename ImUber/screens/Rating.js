@@ -4,6 +4,8 @@ import PrimaryButton from "../components/PrimaryButton";
 import UnderlineButton from "../components/UnderlineButton";
 import StarRating from 'react-native-star-rating-widget';
 import styles from "../components/styles";
+import { useMutation } from '@apollo/client';
+import { CREATE_RATING } from "../graphql";
 
 
 // const styles = StyleSheet.create({
@@ -36,6 +38,8 @@ import styles from "../components/styles";
 
   
 const Rating = ({ navigation }) => {
+
+    const [createRating, { data, loading, error }] = useMutation(EMAIL_SIGNUP);
 
     const submit = () => {
         navigation.navigate('Main');

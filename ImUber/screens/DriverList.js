@@ -15,7 +15,10 @@ import { PickerView } from '@ant-design/react-native'
 //     }
 // })
 
-const DriverList = ({ navigation }) => {
+const DriverList = ({ route, navigation }) => {
+
+    // const { params } = route;
+    // const driversData = params?.data;
 
     const driversData = [
         { id: '1', departTime: "10:30", start:"Taichung", end: "TSMC", price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },

@@ -10,6 +10,11 @@ import UnderlineButton from "./UnderlineButton";
 
 const DriverMain = ({number, handleAdd, handleMinus, hours, minutes, handleChange, generateRoute, addStop, textInput}) => {
 
+
+    // CREATE_RIDE: MaximumCapacity, DriverID, response: 
+
+    
+
     return (
         <View>
             <View style={styles.inputGroup}>

@@ -5,6 +5,12 @@ import UnderlineButton from "../components/UnderlineButton";
 import styles from "../components/styles";
 import axios from 'axios';
 import * as Keychain from 'react-native-keychain';
+import { graphql } from '@apollo/react-hoc';
+import { useMutation } from '@apollo/client';
+import { useAuth } from '../AuthContext';
+import {
+    EMAIL_SIGNIN
+} from '../graphql';
 
 // const styles = StyleSheet.create({
 //     container: {
@@ -35,6 +41,11 @@ import * as Keychain from 'react-native-keychain';
   
 const Login = ({ navigation }) => {
 
+    const [emailSignIn, { loading, error, data }] = useMutation(EMAIL_SIGNIN);
+
+    // if (loading) return 'Loading...';
+    // if (error) return `Error! ${error.message}`;
+
     const login = () => {
         navigation.navigate('Main');
     };
@@ -48,20 +59,12 @@ const Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-          const response = await axios.post('https://your-api/login', {
-            username,
-            password,
-          });
-    
-          const { token } = response.data;
-    
-          // Save the JWT token securely
-          await Keychain.setGenericPassword('jwtToken', token);
-    
-          // Navigate to the next screen or perform other actions after successful login
-          navigation.navigate('Home');
-        } catch (error) {
-          console.error('Login failed:', error);
+            const { data: { login: { token } } } = await emailSignIn({
+              variables: { name, password },
+            });
+            await AsyncStorage.setItem('token', token);
+          } catch (error) {
+            console.error('Login failed:', error.message);
         }
     };
     

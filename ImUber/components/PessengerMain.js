@@ -7,13 +7,13 @@ import styles from "./styles";
 
 
 
-const PessengerMain = ({hours, minutes, handleChange, startMatching}) => {
+const PessengerMain = ({start, end, hours, minutes, handleChange, startMatching}) => {
 
     return (
         <View>
             <View style={styles.inputGroup}>
-                <SearchableDropDown style={styles.input} placeholder={"Select your pickup point"}/>
-                <SearchableDropDown style={styles.input} placeholder={"Select your destination"}/>
+                <SearchableDropDown value={start} style={styles.input} placeholder={"Select your pickup point"}/>
+                <SearchableDropDown value={end} style={styles.input} placeholder={"Select your destination"}/>
             </View>
             <Text style={styles.text}>Depart</Text> 
             <TimePicker value={{ hours, minutes }} onChange={handleChange} />

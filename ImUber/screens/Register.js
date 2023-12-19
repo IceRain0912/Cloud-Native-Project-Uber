@@ -3,6 +3,8 @@ import React from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import UnderlineButton from "../components/UnderlineButton";
 import styles from "../components/styles";
+import { EMAIL_SIGNUP } from "../graphql";
+
 
 // const styles = StyleSheet.create({
 //     container: {
@@ -32,6 +34,8 @@ import styles from "../components/styles";
 
   
 const Register = ({ navigation }) => {
+
+    const [emailSignUp, { data, loading, error }] = useMutation(EMAIL_SIGNUP);
 
     const register = () => {
         navigation.navigate('Login');
