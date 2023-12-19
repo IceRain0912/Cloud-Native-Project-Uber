@@ -89,10 +89,6 @@ const DriversCard = ({ driver,  navigation }) => {
         navigation.navigate('ConfirmRide');
     };
 
-    const addLineBot = () => {
-        Linking.openURL('https://line.me/R/ti/p/%40150qfayv');
-    }
-
     const togglePaymentModal = () => {
         setPaymentModalVisible(!paymentModalVisible);
     };
@@ -139,7 +135,7 @@ const DriversCard = ({ driver,  navigation }) => {
                 primaryButtonText = {"Continue to payment (60s)"}
                 sencondaryButtonText = {"Cancel"}
                 isVisible = {paymentModalVisible}
-                primaryAction={addLineBot}
+                primaryAction={confirmRide}
                 closeModal={togglePaymentModal}
             />
         </View>
