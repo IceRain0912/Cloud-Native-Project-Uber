@@ -8,12 +8,24 @@ import styles from "../components/styles";
 
 import { useQuery, gql } from "@apollo/client";
 
-// Your GraphQL query
-// const GET_ROUTE_INFO = gql`
-//   query GetRouteInfo {
-//     // Your GraphQL query to get route information
-//   }
-// `;
+const CREATE_LOCATION = gql`
+  mutation CreateLocation(
+    $Name: String!
+    $Longtitude: Float!
+    $Latitude: Float!
+  ) {
+    CreateLocation(Name: $Name, Longtitude: $Longtitude, Latitude: $Latitude) {
+      ok
+      error
+      location {
+        ID
+        Name
+        Longtitude
+        Latitude
+      }
+    }
+  }
+`;
 
 const EDGE_PADDING = { top: 50, right: 50, bottom: 50, left: 50 };
 const INITIAL_REGION = {
@@ -31,21 +43,16 @@ const Map = ({ onMapValues }) => {
   const [driverLocation, setDriverLocation] = useState(null);
 
   // Fetch data from GraphQL server
-  // const { loading, error, data } = useQuery(GET_ROUTE_INFO);
-
-  // useEffect(() => {
-  //   if (!loading && !error && data && data.routeInfo) {
-  //     // Extract data from the GraphQL response and set state
-  //     const { origin, destination, stops, driverLocation } = data.routeInfo;
-  //     setOrigin(origin);
-  //     setDestination(destination);
-  //     setStops(stops);
-  //     setDriverLocation(driverLocation);
-  //   }
-  // }, [loading, error, data]);
-
-  // if (loading) return <Text>Loading...</Text>;
-  // if (error) return <Text>Error: {error.message}</Text>;
+  // const { loading, error, data } = useQuery(CREATE_LOCATION, {
+  //   variables: {
+  //     Name: "新竹火車站",
+  //     Longtitude: 120.97158829773566,
+  //     Latitude: 24.801850638002016,
+  //   },
+  // });
+  // console.log(data);
+  // console.log(loading);
+  // console.log(error);
 
   useEffect(() => {
     setOrigin({
