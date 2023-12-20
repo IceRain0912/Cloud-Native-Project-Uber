@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Linking } from "react-native";
 import React, { useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import SecondaryButton from "../components/SecondaryButton";
@@ -19,17 +19,18 @@ const ConfirmRide = ({ navigation }) => {
     currentDate.getMinutes() + parseInt(time)
   }`;
 
-  const payTheFare = () => {
-    navigation.navigate("PessengerTrackRide");
-  };
+  // const payTheFare = () => {
+  //   navigation.navigate("PessengerTrackRide");
+  // };
 
   const cancelPayment = () => {
     navigation.navigate("Main");
   };
 
   const addLineBot = () => {
-    Linking.openURL('https://line.me/R/ti/p/%40150qfayv');
-  }
+    Linking.openURL("https://line.me/R/ti/p/%40150qfayv");
+    navigation.navigate("PessengerTrackRide");
+  };
 
   const handleMapValues = (values) => {
     setDistance(values.OrgToDes.distance);
@@ -67,3 +68,5 @@ const ConfirmRide = ({ navigation }) => {
 };
 
 export default ConfirmRide;
+
+// addLineBot

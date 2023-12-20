@@ -52,7 +52,6 @@ const App = () => {
           />
           <Stack.Screen name="OnCar" component={OnCar} />
           <Stack.Screen name="Rating" component={Rating} />
-          {/* <Stack.Screen name="ConfirmRoute" component={ConfirmRoute} /> */}
           <Stack.Screen name="DriverTrackRide" component={DriverTrackRide} />
         </Stack.Navigator>
       </NavigationContainer>
