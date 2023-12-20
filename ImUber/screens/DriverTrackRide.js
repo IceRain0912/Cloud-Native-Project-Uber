@@ -15,6 +15,7 @@ const DriverTrackRide = ({ navigation }) => {
   };
   const togglePaymentModal = () => {
     setIsPaymentModalVisible(!isPaymentModalVisible);
+    navigation.navigate("Rating");
   };
   const togglePickModal = () => {
     setIsPickModalVisible(!isPickModalVisible);
