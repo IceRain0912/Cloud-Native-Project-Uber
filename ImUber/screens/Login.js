@@ -62,7 +62,8 @@ const Login = ({ navigation }) => {
             const { data: { login: { token } } } = await emailSignIn({
               variables: { name, password },
             });
-            await AsyncStorage.setItem('token', token);
+            // await AsyncStorage.setItem('token', token);
+            console.log('Login success');
           } catch (error) {
             console.error('Login failed:', error.message);
         }

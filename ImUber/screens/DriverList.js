@@ -17,13 +17,16 @@ import { PickerView } from '@ant-design/react-native'
 
 const DriverList = ({ route, navigation }) => {
 
-    // const { params } = route;
-    // const driversData = params?.data;
+    const start = route.params.start.name;
+    const end = route.params.end.name;
+
+    console.log(start)
+    console.log(end)
 
     const driversData = [
-        { id: '1', departTime: "10:30", start:"Taichung", end: "TSMC", price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },
-        { id: '2', departTime: "10:30", start:"Taichung", end: "TSMC", price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },
-        { id: '3', departTime: "10:30", start:"Taichung", end: "TSMC", price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },
+        { id: '1', departTime: "10:30", start:start, end: end, price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },
+        { id: '2', departTime: "10:30", start:start, end: end, price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },
+        { id: '3', departTime: "10:30", start:start, end: end, price: 80, dist: 3.5, time: 17, name: 'John Doe', star: 4.3, rating: 27, seatsLeft: 3 },
     ];
 
     const pessengerData = { start: "Taichung", end:"TSMC", time: "10:30" };
@@ -32,8 +35,8 @@ const DriverList = ({ route, navigation }) => {
         <View style={{ padding: 16, gap:24,  }}>
             {/* <NavBar pessenger={pessengerData} /> */}
             <Text style={styles.title}>4 drivers in your route</Text> 
-            <View style={{ padding: 16}}>
-                <Text>Sort by</Text> 
+            {/* <View style={{ padding: 16}}> */}
+                {/* <Text>Sort by</Text>  */}
                 {/* <Dropdown/> */}
                 {/* <PickerView
                     onChange={this.onChange}
@@ -41,7 +44,7 @@ const DriverList = ({ route, navigation }) => {
                     data={seasons}
                     cascade={false}
                 /> */}
-            </View>
+            {/* </View> */}
             <FlatList
                 data={driversData}
                 keyExtractor={(item) => item.id}

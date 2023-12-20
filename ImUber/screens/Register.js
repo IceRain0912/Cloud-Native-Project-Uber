@@ -4,6 +4,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import UnderlineButton from "../components/UnderlineButton";
 import styles from "../components/styles";
 import { EMAIL_SIGNUP } from "../graphql";
+import { useMutation } from '@apollo/client';
 
 
 // const styles = StyleSheet.create({
@@ -37,8 +38,22 @@ const Register = ({ navigation }) => {
 
     const [emailSignUp, { data, loading, error }] = useMutation(EMAIL_SIGNUP);
 
-    const register = () => {
+    const register = async () => {
         navigation.navigate('Login');
+        try {
+            const { data } = await emailSignUp({
+              variables: {
+                Name: name,
+                Password: password,
+                Sex: 0,
+                PhoneNumber: "0900000000"
+              },
+            });
+            console.log('User created successfully');
+        }
+        catch (error) {
+            console.error('Error creating user:', error.message);
+        }
     };
 
     const login = () => {

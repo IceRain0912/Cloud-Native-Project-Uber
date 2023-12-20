@@ -30,9 +30,6 @@ const Main = ({ navigation }) => {
     const handleContentChange = (content) => {
         setSelectedContent(content);
     };
-
-    const [start, setStart] = React.useState("");
-    const [end, setEnd] = React.useState("");
     const [hours, setHours] = React.useState(0);
     const [minutes, setMinutes] = React.useState(0);
     const handleChange = (values) => {
@@ -56,11 +53,6 @@ const Main = ({ navigation }) => {
     };
 
     const [textInput, setTextInput] = useState([]);
-
-    const startMatching = () => {
-        // navigation.navigate('DriverList', { data: matchedRide });
-        navigation.navigate('DriverList');
-    };
 
     const generateRoute =  () => {
         navigation.navigate('ConfirmRoute');
@@ -107,12 +99,10 @@ const Main = ({ navigation }) => {
 
                 {selectedContent == 'Pessenger' ? (
                     <PessengerMain
-                        start={start}
-                        end={end}
                         hours={hours}
                         minutes={minutes}
                         handleChange={handleChange}
-                        startMatching={startMatching}
+                        navigation={navigation}
                     />
                 ) : (
                     <DriverMain
@@ -124,7 +114,7 @@ const Main = ({ navigation }) => {
                         handleChange={handleChange}
                         addStop={addStop}
                         textInput={textInput}
-                        generateRoute={generateRoute}
+                        navigation={navigation}
                     />
                 )}
             </View>
