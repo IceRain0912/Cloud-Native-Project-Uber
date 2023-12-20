@@ -6,78 +6,23 @@ import Popup from '../components/Popup';
 import Card from '../components/Card';
 import PrimaryButton from '../components/PrimaryButton';
 import styles from "../components/styles";
+import { useMutation} from '@apollo/client';
+import { CREATE_TRANSACTION } from './graphql';
 
-// const styles = StyleSheet.create({
-//     card: {
-//         backgroundColor: '#ffff',
-//         borderRadius: 20,
-//         padding: 24,
-//         marginBottom: 32,
-//         width: 343,
-//         shadowOffset: {width: 0, height: 8},
-//         shadowOpacity: 0.3,
-//         shadowRadius: 4,
-//         shadowColor: '#D0D0D1',
-//     },
-//     cardContent:{
-//         display: "flex",
-//         gap: 16,
-//     },
-//     routeInfo: {
-//         display: "flex",
-//         flexDirection: "row",
-//         justifyContent: "space-between",
-//     },
-//     routeDetail: {
-//         display: "flex",
-//         flexDirection: "row",
-//         gap: 8,
-//     },
-//     cardSmallTitle: {
-//         color: "#4B4B4B",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 14,
-//         fontWeight: "700",
-//     },
-//     cardTitle: {
-//         color: "#2E4374",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 16,
-//         fontWeight: "700",
-//     },
-//     cardText: {
-//         color: "#4B4B4B",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 16,
-//         fontWeight: "500",
-//     },
-//     cardSmallText: {
-//         color: "#4B4B4B",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 12,
-//         fontWeight: "500",
-//     },
-//     cardSmallTextLight: {
-//         color: "#C2C2C2",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 12,
-//         fontWeight: "500",
-//     },
-//     cardLargeText: {
-//         color: "#4B4B4B",
-//         fontFamily: "Lato, sans-serif",
-//         fontSize: 18,
-//         fontWeight: "700",
-//     },
-// });
+
 
 const DriversCard = ({ driver,  navigation }) => {
+
+    //CREATE_TRANSACTION: PassengerID, RouteID, Payment, DepartureTime, CarID, RequestTime, response: ok
+
+    // const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION);
     
     const [requestModalVisible, setRequestModalVisible] = useState(false);
     const [paymentModalVisible, setPaymentModalVisible] = useState(false);
 
     const toggleRequestModal = () => {
         setRequestModalVisible(!requestModalVisible);
+        // create transaction function
     };
 
     const continueToPayment = () => {

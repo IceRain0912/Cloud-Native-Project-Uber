@@ -3,22 +3,29 @@ import { View, Text } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
 const SearchableDropDown = ({placeholder}) => {
-
-    const [selectedItem, setSelectedItem] = useState(null);
     const [data, setData] = useState([
-        { id: 1, name: 'Option 1' },
-        { id: 2, name: 'Option 2' },
-        { id: 3, name: 'Option 3' },
+        { id: 1, name: '新竹火車站' },
+        { id: 2, name: '台灣積體電路製造十二廠P7' },
+        { id: 3, name: '新竹高鐵站' },
+        { id: 4, name: '國立清華大學' },
+        { id: 5, name: '國立交通大學' },
+        { id: 6, name: '新竹市政府' },
+        { id: 7, name: '新竹巨城購物中心' },
     ]);
+    const [selectedItem, setSelectedItem] = useState("");
 
     const defaultValue = data.length > 0 ? data[0] : null;
 
+    const onItemSelect = (item) => {
+      // Perform actions or update state when the value changes
+      setSelectedItem(item);
+      console.log('Selected Item:', item);
+  };
+    
   return (
     <View>
       <SearchableDropdown
-        onItemSelect={(item) => {
-          setSelectedItem(item);
-        }}
+        onItemSelect={onItemSelect}
         containerStyle={{ padding: 5 }}
         textInputStyle={{
           padding: 12,

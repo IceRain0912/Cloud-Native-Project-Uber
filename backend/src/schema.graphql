@@ -10,7 +10,7 @@ type Mutation {
   CreateLocation(Name: String!, Longtitude: Float!, Latitude: Float!): CreateLocationResponse!
   CreateRating(RaterID: Int!, RatedPersonID: Int!, RateStars: Int!, RouteID: Int!): CreateRatingResponse!
   CreateRide(MaximumCapacity: Int!, DriverID: Int!): CreateRideResponse!
-  CreateRoute(Comp: String!, Model: String!, PlateNum: String!, Capacity: Int!): CreateRouteResponse!
+  CreateRoute(DriverID: Int!, StartingPointID: Int!, MiddlePointsID: [Int], DestinationID: Int): CreateRouteResponse!
   CreateTransaction(PassengerID: Int!, RouteID: Int!, Payment: String!, DepartureTime: String!, CarID: Int!, RequestTime: String!): CreateTransactionResponse!
   EmailSignIn(PhoneNumber: String!, Password: String!): EmailSignInResponse!
   EmailSignUp(Name: String!, Password: String!, Sex: Int!, PhoneNumber: String!): EmailSignUpResponse!
@@ -29,6 +29,7 @@ type Query {
   GetRating(RateID: Int!): GetRatingResponse!
   GetRide(RideID: Int!): GetRideResponse!
   GetRoute(RouteID: Int!): GetRouteResponse!
+  GetRoutePoint(RouteID: Int!): GetRoutePointResponse!
   GetTransaction(TransactionID: Int!): GetTransactionResponse!
   GetUser(UserID: Int!): GetUserResponse!
 }
@@ -141,10 +142,16 @@ type Ride {
 type CreateRouteResponse {
   ok: Boolean!
   error: String
-  route: Route
+  route: String
 }
 
 type GetRouteResponse {
+  ok: Boolean!
+  error: String
+  route: Route
+}
+
+type GetRoutePointResponse {
   ok: Boolean!
   error: String
   route: Route

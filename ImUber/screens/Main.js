@@ -1,20 +1,35 @@
 import { View, Text, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchableDropDown from "../components/SearchableDropDown";
 import Chip from "../components/Chip";
 import PessengerMain from "../components/PessengerMain";
 import DriverMain from "../components/DriverMain";
 import styles from "../components/styles";
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { CREATE_ROUTE, CREATE_RIDE, GET_RIDE } from './graphql';
 
   
 const Main = ({ navigation }) => {
+
+    // CREATE_ROUTE: 
+    // CREATE_RIDE: MaximumCapacity, DriverID, response: ride id
+    // GET_RIDE: start, end, response: Driver(Name, RatingAsRated), RouteID, MaximumCapacity
+    
+    // const [createRoute, { loading, error }] = useMutation(CREATE_ROUTE);
+    // const [createRide, { loading, error }] = useMutation(CREATE_RIDE);
+    // const [getRide, { loading, error, data }] = useLazyQuery(GET_RIDE, {
+    //     fetchPolicy: "no-cache"
+    // })
+    // useEffect(() => {
+    //     if(data)
+    //         handleAfterQuery()
+    // }, [data])
 
     const [selectedContent, setSelectedContent] = useState("Pessenger");
     
     const handleContentChange = (content) => {
         setSelectedContent(content);
     };
-
     const [hours, setHours] = React.useState(0);
     const [minutes, setMinutes] = React.useState(0);
     const handleChange = (values) => {
@@ -39,12 +54,36 @@ const Main = ({ navigation }) => {
 
     const [textInput, setTextInput] = useState([]);
 
-    const startMatching = () => {
-        navigation.navigate('DriverList');
-    };
-
-    const generateRoute = () => {
+    const generateRoute =  () => {
         navigation.navigate('ConfirmRoute');
+
+        // create route
+        // try {
+        //     // Call the createRouteMutation with variables
+        //     const { data } = await createRoute({
+        //       variables: {
+        //         //
+        //       },
+        //     });
+        //     console.log('Create Route Response:', data);
+        //   } catch (error) {
+        //     console.error('Create Route Error:', error.message);
+        // }
+
+        // // create ride
+        // try {
+        //     // Call the createRouteMutation with variables
+        //     const { data } = await createRide({
+        //       variables: {
+        //         MaximumCapacity: number
+        //         //DriverID: 
+        //       },
+        //     });
+        //     console.log('Create Ride Response:', data);
+        //   } catch (error) {
+        //     console.error('Create Ride Error:', error.message);
+        // }
+
     };
 
     return (
@@ -63,7 +102,7 @@ const Main = ({ navigation }) => {
                         hours={hours}
                         minutes={minutes}
                         handleChange={handleChange}
-                        startMatching={startMatching}
+                        navigation={navigation}
                     />
                 ) : (
                     <DriverMain
@@ -75,7 +114,7 @@ const Main = ({ navigation }) => {
                         handleChange={handleChange}
                         addStop={addStop}
                         textInput={textInput}
-                        generateRoute={generateRoute}
+                        navigation={navigation}
                     />
                 )}
             </View>

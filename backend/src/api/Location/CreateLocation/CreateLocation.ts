@@ -13,12 +13,16 @@ const resolvers: Resolvers = {
       async (
         _,
         args: CreateLocationMutationArgs,
-        { req, pubSub }
+        // { req, pubSub }
       ): Promise<CreateLocationResponse> => {
-        const user: User = req.user;
+        // const user: User = req.user;
+        // console.log("user: ", user)
         try {
+          console.log("args: ", args)
           const location = await Location.create({ ...args }).save();
-          user.save();
+          // const location = null;
+          console.log("location: ", location);
+          // await user.save();
           return {
             ok: true,
             error: null,
